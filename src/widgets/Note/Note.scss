@@ -1,0 +1,106 @@
+.note {
+  width: 390px;
+  background-color: var(--color-gray-1);
+  color: var(--color-gray-8);
+  border: var(--border);
+  border-radius: var(--border-radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  &__title {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 700;
+    align-self: center;
+    color: var(--color-gray-8);
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__field {
+    width: 100%;
+  }
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 16px;
+  }
+}
+
+//Переместить стили для Field в его компонент
+.field {
+  position: relative;
+
+  &__label {
+    position: absolute;
+    top: 50%;
+    left: 14px;
+    color: #F3F5F780;
+    translate: 0 -50%;
+  }
+
+  &__input {
+    --fieldInputPaddingX: 14px;
+    width: 100%;
+    height: var(--input-height);
+    padding-inline: var(--fieldInputPaddingX);
+    background-color: transparent;
+    border: var(--border);
+    border-radius: var(--border-radius-md);
+
+    &:hover,
+    &:focus {
+      border-color: var(--color-green-5);
+    }
+
+    &:focus {
+      background-color: var(--color-gray-1);
+      outline: none;
+    }
+  }
+
+  &__error {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    font-size: 12px;
+    color: var(--color-red-2);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+}
+
+.note__delete-all-button{
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  color: var(--color-red-1);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 19.5px;
+
+  &:hover{
+    color: var(--color-red-2);
+  }
+}
+
+.note__info{
+  color: var(--color-gray-7);
+}
+
+.note__list{
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}

@@ -1,8 +1,9 @@
-const App =()=>{
-  return(
-    <div>
-      <h1>Notes App</h1>
-    </div>
+import Note from "../widgets/Note/Note";
+import './styles'
+
+const App = () => {
+  return (
+    <Note />
   )
 }
 

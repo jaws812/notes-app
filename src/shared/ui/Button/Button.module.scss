@@ -1,0 +1,17 @@
+.button{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-green-1);
+  border: none;
+  border-radius: 14px;
+  padding: 12px 85px;
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 600;
+  max-width: 100%;
+
+  &.isDisabled{
+    background-color: var(--color-green-5);
+  }
+}
