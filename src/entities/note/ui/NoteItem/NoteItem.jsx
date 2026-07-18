@@ -1,17 +1,29 @@
 import './NoteItem.scss'
 
-const NoteItem = () => {
+const NoteItem = (props) => {
+  const {
+    id,
+    title,
+    content,
+    isDone,
+    onDeleteNoteButtonClick,
+    onNoteCompleteChange,
+  } = props
+
   return (
     <li className="note-item">
       <input
         className="note-item__checkbox"
-        id=""
-        name=""
+        id={id}
         type="checkbox"
+        checked={isDone}
+        onChange={({target}) => {
+          onNoteCompleteChange(id, target.checked)
+        }}
       />
       <div className="note-item__body">
-        <div className="note-item__title">Купить продукты</div>
-        <div className="note-item__content">Молоко, хлеб, кофе и немного фруктов на неделю.</div>
+        <div className="note-item__title">{title}</div>
+        <div className="note-item__content">{content}</div>
       </div>
       <div className="note-item__actions">
         <a
@@ -39,6 +51,7 @@ const NoteItem = () => {
           type="button"
           aria-label="Delete"
           title="Delete"
+          onClick={() => onDeleteNoteButtonClick(id)}
         >
           <svg
             width="16"

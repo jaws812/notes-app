@@ -6,7 +6,8 @@ const Field = (props) => {
     id,
     type,
     label,
-    value = "",
+    value,
+    onInput,
   } = props
 
   return (
@@ -22,6 +23,7 @@ const Field = (props) => {
         autoComplete="off"
         type={type}
         value={value}
+        onInput={onInput}
       />
       <span
         className="field__error"

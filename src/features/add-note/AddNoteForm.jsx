@@ -1,20 +1,40 @@
 import Field from "../../shared/ui/Field/Field";
 import Button from "../../shared/ui/Button/Button";
 
-const AddNoteForm = () => {
+const AddNoteForm = (props) => {
+  const {
+    addNote,
+    newNoteTitle,
+    setNewNoteTitle,
+    newNoteContent,
+    setNewNoteContent,
+  } = props
+
+  const onSubmit = (event) => {
+    event.preventDefault()
+    addNote()
+  }
+
   return (
-    <form className="note__form">
+    <form
+      className="note__form"
+      onSubmit={onSubmit}
+    >
       <Field
         className="note__field"
         id="note-title"
         type="text"
         label="Заголовок заметки"
+        value={newNoteTitle}
+        onInput={(event) => setNewNoteTitle(event.target.value)}
       />
       <Field
         className="note__field"
         id="note-content"
         type="text"
         label="Текст заметки..."
+        value={newNoteContent}
+        onInput={(event) => setNewNoteContent(event.target.value)}
       />
       <Button
         className="note__button"

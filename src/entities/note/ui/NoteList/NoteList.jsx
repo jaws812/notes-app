@@ -1,11 +1,23 @@
 import NoteItem from "../NoteItem/NoteItem";
 
-const NoteList = () => {
-  return(
+const NoteList = (props) => {
+  const {
+    notes,
+    onDeleteNoteButtonClick,
+    onNoteCompleteChange,
+  } = props
+
+
+  return (
     <ul className="note__list">
-      <NoteItem />
-      <NoteItem />
-      <NoteItem />
+      {notes.map((note) => (
+        <NoteItem
+          key={note.id}
+          onDeleteNoteButtonClick={onDeleteNoteButtonClick}
+          onNoteCompleteChange={onNoteCompleteChange}
+          {...note}
+        />
+      ))}
     </ul>
   )
 }
