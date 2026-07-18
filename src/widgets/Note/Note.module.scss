@@ -1,0 +1,62 @@
+.note {
+  width: 390px;
+  background-color: var(--color-gray-1);
+  color: var(--color-gray-8);
+  border: var(--border);
+  border-radius: var(--border-radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.title {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 700;
+  align-self: center;
+  color: var(--color-gray-8);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.field {
+  width: 100%;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 16px;
+  color: var(--color-gray-7);
+}
+
+.deleteAllButton {
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  color: var(--color-red-1);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 19.5px;
+
+  &:hover {
+    color: var(--color-red-2);
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.emptyMessage {
+  text-align: center;
+  color: var(--color-gray-8);
+}

@@ -1,4 +1,4 @@
-import './NoteItem.scss'
+import css from './NoteItem.module.scss'
 
 const NoteItem = (props) => {
   const {
@@ -11,9 +11,9 @@ const NoteItem = (props) => {
   } = props
 
   return (
-    <li className="note-item">
+    <li className={css.noteItem}>
       <input
-        className="note-item__checkbox"
+        className={css.checkbox}
         id={id}
         type="checkbox"
         checked={isDone}
@@ -21,13 +21,13 @@ const NoteItem = (props) => {
           onNoteCompleteChange(id, target.checked)
         }}
       />
-      <div className="note-item__body">
-        <div className="note-item__title">{title}</div>
-        <div className="note-item__content">{content}</div>
+      <div className={css.body}>
+        <div className={css.title}>{title}</div>
+        <div className={css.content}>{content}</div>
       </div>
-      <div className="note-item__actions">
+      <div className={css.actions}>
         <a
-          className="note-item__link"
+          className={css.link}
           href="/"
         >
           <svg
@@ -47,7 +47,7 @@ const NoteItem = (props) => {
           </svg>
         </a>
         <button
-          className="note-item__delete-button"
+          className={css.deleteButton}
           type="button"
           aria-label="Delete"
           title="Delete"

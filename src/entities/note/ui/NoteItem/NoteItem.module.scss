@@ -1,4 +1,4 @@
-.note-item {
+.noteItem {
   display: flex;
   gap: 12px;
   background-color: var(--color-gray-2);
@@ -6,42 +6,42 @@
   border-radius: var(--border-radius-md);
 }
 
-.note-item__title {
+.title {
   font-size: 18px;
   font-weight: 600;
   line-height: 26px;
 }
 
-.note-item__content {
+.content {
   font-size: 13px;
   line-height: 18px;
   font-weight: 500;
   color: var(--color-gray-6);
 }
 
-.note-item__actions {
+.actions {
   display: flex;
   align-self: flex-start;
   gap: 6px;
   margin-left: auto;
 }
 
-.note-item__actions a:visited {
+.actions a:visited {
   color: var(--color-gray-6);
 }
 
-.note-item__link {
+.link {
   height: 100%;
   padding-block: 2px;
 }
 
-.note-item__delete-button {
+.deleteButton {
   border: none;
   background-color: transparent;
   color: var(--color-gray-6);
 }
 
-.note-item__checkbox {
+.checkbox {
   flex-shrink: 0;
   appearance: none;
   position: relative;
@@ -54,11 +54,6 @@
   &:checked {
     background-color: var(--color-green-1);
     border-color: var(--color-green-1);
-
-    //    & + .label {
-    //      color: var(--color-gray-4);
-    //      text-decoration: line-through;
-    //    }
   }
 
   &:not(:checked) {
@@ -79,12 +74,12 @@
   }
 }
 
-.note-item .note-item__checkbox:checked ~ .note-item__body .note-item__title {
+.noteItem .checkbox:checked ~ .body .title {
   color: var(--color-gray-7);
   text-decoration: line-through;
 }
 
-.note-item:has(.note-item__checkbox:checked) {
+.noteItem:has(.checkbox:checked) {
   background-color: var(--color-green-4);
 }
 

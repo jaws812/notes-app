@@ -1,4 +1,4 @@
-import './Field.module.scss'
+import css from './Field.module.scss'
 
 const Field = (props) => {
   const {
@@ -11,14 +11,14 @@ const Field = (props) => {
   } = props
 
   return (
-    <div className="note__field field">
+    <div className={`${className} field`}>
       <label
-        className={`field ${className}`}
+        className={css.label}
         htmlFor={id}
       >{label}
       </label>
       <input
-        className="field__input"
+        className={css.input}
         id={id}
         autoComplete="off"
         type={type}
@@ -26,7 +26,7 @@ const Field = (props) => {
         onInput={onInput}
       />
       <span
-        className="field__error"
+        className={css.error}
         title="Ошибка!"
         style={{display: 'none'}}
       >Ошибка!</span>

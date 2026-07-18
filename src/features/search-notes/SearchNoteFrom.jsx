@@ -2,19 +2,22 @@ import Field from "../../shared/ui/Field/Field";
 
 const SearchNoteFrom = (props) => {
   const {
-    onSearchInput,
+    searchQuery,
+    setSearchQuery,
+    css,
   } = props
   return (
     <form
-      className="note__form"
+      className={css.form}
       onSubmit={(event) => event.preventDefault()}
     >
       <Field
-        className="note__field"
+        className={css.field}
         id="search-note"
         type="text"
         label="Поиск по заметкам"
-        onInput={(event) => onSearchInput(event.target.value)}
+        value={searchQuery}
+        onInput={(event) => setSearchQuery(event.target.value)}
       />
     </form>
   )

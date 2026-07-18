@@ -8,6 +8,7 @@ const AddNoteForm = (props) => {
     setNewNoteTitle,
     newNoteContent,
     setNewNoteContent,
+    css,
   } = props
 
   const onSubmit = (event) => {
@@ -17,7 +18,7 @@ const AddNoteForm = (props) => {
 
   return (
     <form
-      className="note__form"
+      className={css.form}
       onSubmit={onSubmit}
     >
       <Field

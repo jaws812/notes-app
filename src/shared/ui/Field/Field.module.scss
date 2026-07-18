@@ -1,0 +1,38 @@
+.input {
+  --fieldInputPaddingX: 14px;
+  color: var(--color-gray-8);
+  width: 100%;
+  height: var(--input-height);
+  padding-inline: var(--fieldInputPaddingX);
+  background-color: transparent;
+  border: var(--border);
+  border-radius: var(--border-radius-md);
+
+  &:hover,
+  &:focus {
+    border-color: var(--color-green-5);
+  }
+
+  &:focus {
+    background-color: var(--color-gray-1);
+    outline: none;
+  }
+}
+
+.label{
+  display: block;
+  margin-bottom: 8px;
+}
+
+.error {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  font-size: 12px;
+  color: var(--color-red-2);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 100%;
+}
