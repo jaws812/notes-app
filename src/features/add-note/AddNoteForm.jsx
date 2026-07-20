@@ -8,6 +8,7 @@ const AddNoteForm = (props) => {
     setNewNoteTitle,
     newNoteContent,
     setNewNoteContent,
+    newNoteInputRef,
     css,
   } = props
 
@@ -28,6 +29,7 @@ const AddNoteForm = (props) => {
         label="Заголовок заметки"
         value={newNoteTitle}
         onInput={(event) => setNewNoteTitle(event.target.value)}
+        ref={newNoteInputRef}
       />
       <Field
         className="note__field"
@@ -41,7 +43,7 @@ const AddNoteForm = (props) => {
         className="note__button"
         type="submit"
         title="Добавить заметку"
-      />
+      >Добавить заметку</Button>
     </form>
   )
 }

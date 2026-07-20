@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import Button from "../../shared/ui/Button/Button";
 
 const NoteInfo = (props) => {
@@ -17,11 +18,11 @@ const NoteInfo = (props) => {
         <Button
           className={css.deleteAllButton}
           title="Удалить все"
-          onDeleteAllButtonClick={onDeleteAllButtonClick}
-        />
+          onClick={onDeleteAllButtonClick}
+        >Удалить все</Button>
       )}
     </div>
   )
 }
 
-export default NoteInfo
+export default memo(NoteInfo)

@@ -2,22 +2,22 @@ import s from './Button.module.scss'
 
 const Button = (props) => {
   const {
-    className,
+    className='',
     children,
-    type="button",
+    type = "button",
     title,
-    onDeleteAllButtonClick,
+    allWidth,
+    onClick,
   } = props
 
   return (
     <button
-      className={`${s.button} ${className}`}
+      className={`${s.button} ${className} ${allWidth ? s.width : ''}`}
       type={type}
       title={title}
       aria-label={title}
-      onClick={onDeleteAllButtonClick}
+      onClick={onClick}
     >
-      {title}
       {children}
     </button>
   )

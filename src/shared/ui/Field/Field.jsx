@@ -8,6 +8,7 @@ const Field = (props) => {
     label,
     value,
     onInput,
+    ref,
   } = props
 
   return (
@@ -24,6 +25,7 @@ const Field = (props) => {
         type={type}
         value={value}
         onInput={onInput}
+        ref={ref}
       />
       <span
         className={css.error}

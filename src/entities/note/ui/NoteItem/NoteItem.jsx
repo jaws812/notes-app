@@ -1,3 +1,4 @@
+import {memo} from 'react'
 import css from './NoteItem.module.scss'
 
 const NoteItem = (props) => {
@@ -8,10 +9,11 @@ const NoteItem = (props) => {
     isDone,
     onDeleteNoteButtonClick,
     onNoteCompleteChange,
+    ref,
   } = props
 
   return (
-    <li className={css.noteItem}>
+    <li className={css.noteItem} ref={ref}>
       <input
         className={css.checkbox}
         id={id}
@@ -113,4 +115,4 @@ const NoteItem = (props) => {
   )
 }
 
-export default NoteItem
+export default memo(NoteItem)
