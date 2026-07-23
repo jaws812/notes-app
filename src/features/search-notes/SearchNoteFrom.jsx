@@ -1,11 +1,17 @@
 import Field from "../../shared/ui/Field/Field";
+import {useContext} from "react";
+import {NotesContext} from "../../entities/note/model/NotesContext";
 
 const SearchNoteFrom = (props) => {
   const {
-    searchQuery,
-    setSearchQuery,
     css,
   } = props
+
+  const {
+    searchQuery,
+    setSearchQuery,
+  } = useContext(NotesContext)
+
   return (
     <form
       className={css.form}

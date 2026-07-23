@@ -1,5 +1,6 @@
-import {memo} from 'react'
+import {memo, useContext} from 'react'
 import css from './NoteItem.module.scss'
+import {NotesContext} from "../../model/NotesContext";
 
 const NoteItem = (props) => {
   const {
@@ -7,20 +8,27 @@ const NoteItem = (props) => {
     title,
     content,
     isDone,
-    onDeleteNoteButtonClick,
-    onNoteCompleteChange,
-    ref,
   } = props
 
+  const {
+    firstIncompleteNoteRef,
+    firstIncompleteNoteId,
+    deleteNote,
+    toggleNoteComplete,
+  } = useContext(NotesContext)
+
   return (
-    <li className={css.noteItem} ref={ref}>
+    <li
+      className={css.noteItem}
+      ref={id === firstIncompleteNoteId ? firstIncompleteNoteRef : null}
+    >
       <input
         className={css.checkbox}
         id={id}
         type="checkbox"
         checked={isDone}
         onChange={({target}) => {
-          onNoteCompleteChange(id, target.checked)
+          toggleNoteComplete(id, target.checked)
         }}
       />
       <div className={css.body}>
@@ -53,7 +61,7 @@ const NoteItem = (props) => {
           type="button"
           aria-label="Delete"
           title="Delete"
-          onClick={() => onDeleteNoteButtonClick(id)}
+          onClick={() => deleteNote(id)}
         >
           <svg
             width="16"

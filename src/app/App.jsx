@@ -1,9 +1,12 @@
 import Note from "../widgets/Note/Note";
 import './styles'
+import {NotesProvider} from "../entities/note/model/NotesContext";
 
 const App = () => {
   return (
-    <Note />
+    <NotesProvider>
+      <Note />
+    </NotesProvider>
   )
 }
 

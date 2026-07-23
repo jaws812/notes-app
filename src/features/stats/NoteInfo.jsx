@@ -1,15 +1,23 @@
-import { memo } from 'react'
+import {memo, useContext, useMemo} from 'react'
+import {NotesContext} from "../../entities/note/model/NotesContext";
 import Button from "../../shared/ui/Button/Button";
 
 const NoteInfo = (props) => {
   const {
-    total,
-    done,
-    onDeleteAllButtonClick,
     css,
   } = props
 
+  const {
+    notes,
+    deleteAllNotes,
+  } = useContext(NotesContext)
+
+  const total = notes.length
   const hasNotes = total > 0
+  const done = useMemo(() => {
+    return notes.filter(({isDone}) => isDone).length
+  }, [notes])
+
 
   return (
     <div className={css.info}>
@@ -18,7 +26,7 @@ const NoteInfo = (props) => {
         <Button
           className={css.deleteAllButton}
           title="Удалить все"
-          onClick={onDeleteAllButtonClick}
+          onClick={deleteAllNotes}
         >Удалить все</Button>
       )}
     </div>

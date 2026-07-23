@@ -1,16 +1,16 @@
-import {memo} from 'react'
+import {memo, useContext} from 'react'
 import NoteItem from "../NoteItem/NoteItem";
+import {NotesContext} from "../../model/NotesContext";
 
 const NoteList = (props) => {
   const {
-    notes,
-    filteredNotes,
-    firstIncompleteNoteRef,
-    firstIncompleteNoteId,
-    onDeleteNoteButtonClick,
-    onNoteCompleteChange,
     css,
   } = props
+
+  const {
+    notes,
+    filteredNotes,
+  } = useContext(NotesContext)
 
   const hasNotes = notes.length > 0
   const isEmptyFilteredNotes = filteredNotes?.length === 0
@@ -29,9 +29,6 @@ const NoteList = (props) => {
       {(filteredNotes ?? notes).map((note) => (
         <NoteItem
           key={note.id}
-          ref={note.id === firstIncompleteNoteId ? firstIncompleteNoteRef : null}
-          onDeleteNoteButtonClick={onDeleteNoteButtonClick}
-          onNoteCompleteChange={onNoteCompleteChange}
           {...note}
         />
       ))}

@@ -1,7 +1,13 @@
 import Field from "../../shared/ui/Field/Field";
 import Button from "../../shared/ui/Button/Button";
+import {useContext} from "react";
+import {NotesContext} from "../../entities/note/model/NotesContext";
 
 const AddNoteForm = (props) => {
+  const {
+    css,
+  } = props
+
   const {
     addNote,
     newNoteTitle,
@@ -9,8 +15,7 @@ const AddNoteForm = (props) => {
     newNoteContent,
     setNewNoteContent,
     newNoteInputRef,
-    css,
-  } = props
+  } = useContext(NotesContext)
 
   const onSubmit = (event) => {
     event.preventDefault()
