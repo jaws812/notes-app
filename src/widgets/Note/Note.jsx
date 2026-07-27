@@ -16,17 +16,9 @@ const Note = () => {
     <div className={css.note}>
       <h1 className={css.title}>Мои заметки</h1>
       <AddNoteForm
-        // addNote={addNote}
-        // newNoteTitle={newNoteTitle}
-        // setNewNoteTitle={setNewNoteTitle}
-        // newNoteContent={newNoteContent}
-        // setNewNoteContent={setNewNoteContent}
-        // newNoteInputRef={newNoteInputRef}
         css={css}
       />
       <SearchNoteFrom
-        // searchQuery={searchQuery}
-        // setSearchQuery={setSearchQuery}
         css={css}
       />
       <NoteInfo
@@ -36,7 +28,7 @@ const Note = () => {
         onClick={
           () => firstIncompleteNoteRef.current?.scrollIntoView({behavior: 'smooth'})
         }
-        allWidth
+        fullWidth
       >Перейти к первой невыполненной задаче</Button>
       <NoteList
         css={css}

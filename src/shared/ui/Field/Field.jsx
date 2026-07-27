@@ -6,32 +6,46 @@ const Field = (props) => {
     id,
     type,
     label,
+    rows,
+    cols,
+    maxLength,
     value,
+    error,
     onInput,
     ref,
   } = props
 
+  const Component = type === 'textarea' ? 'textarea' : 'input'
+
   return (
-    <div className={`${className} field`}>
+    <div className={`${className} ${css.field}`}>
       <label
         className={css.label}
         htmlFor={id}
       >{label}
       </label>
-      <input
-        className={css.input}
+      <Component
+        className={`
+          ${css.input} 
+          ${error ? 'is-invalid' : ''} 
+          ${type === 'textarea' ? css.textarea : ''}
+        `}
         id={id}
         autoComplete="off"
         type={type}
+        rows={rows}
+        cols={cols}
+        maxLength={maxLength}
         value={value}
         onInput={onInput}
         ref={ref}
       />
-      <span
-        className={css.error}
-        title="Ошибка!"
-        style={{display: 'none'}}
-      >Ошибка!</span>
+      {error && (
+        <span
+          className={css.error}
+          title={error}
+        >{error}</span>
+      )}
     </div>
   )
 }

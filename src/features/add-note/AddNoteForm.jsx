@@ -1,6 +1,6 @@
 import Field from "../../shared/ui/Field/Field";
 import Button from "../../shared/ui/Button/Button";
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import {NotesContext} from "../../entities/note/model/NotesContext";
 
 const AddNoteForm = (props) => {
@@ -17,10 +17,53 @@ const AddNoteForm = (props) => {
     newNoteInputRef,
   } = useContext(NotesContext)
 
+  const [errorTitle, setErrorTitle] = useState('')
+  const [errorContent, setErrorContent] = useState('')
+
+  const clearNewNoteTitle = newNoteTitle.trim()
+  const isNewNoteTitleEmpty = clearNewNoteTitle.length === 0
+  const clearNewNoteContent = newNoteContent.trim()
+  const isNewNoteContentEmpty = clearNewNoteContent.length === 0
+
   const onSubmit = (event) => {
     event.preventDefault()
-    addNote()
+    if (!isNewNoteTitleEmpty && !isNewNoteContentEmpty) {
+      addNote(clearNewNoteTitle, clearNewNoteContent)
+    }
   }
+
+  // const onInputTitle = (event) => {
+  //   const {value} = event.target
+  //   const clearValue = value.trim()
+  //   const hasOnlySpaces = value.length > 0 && clearValue.length === 0
+  //
+  //   setNewNoteTitle(value)
+  //   setErrorTitle(hasOnlySpaces ? 'Заголовок не может быть пустым' : '')
+  // }
+  //
+  // const onInputContent = (event) => {
+  //   const {value} = event.target
+  //   const clearValue = value.trim()
+  //   const hasOnlySpaces = value.length > 0 && clearValue.length === 0
+  //
+  //   setNewNoteContent(value)
+  //   setErrorContent(hasOnlySpaces ? 'Текст для заметки не может быть пустым' : '')
+  // }
+
+  const onInput = (event) => {
+    const {value, id} = event.target
+    const clearValue = value.trim()
+    const hasOnlySpaces = value.length > 0 && clearValue.length === 0
+
+    if (id === 'note-title') {
+      setNewNoteTitle(value)
+      setErrorTitle(hasOnlySpaces ? 'Заголовок не может быть пустым' : '')
+    } else if (id === 'note-content') {
+      setNewNoteContent(value)
+      setErrorContent(hasOnlySpaces ? 'Контент заметки не может быть пустым' : '')
+    } else return console.log("Error onInput!!")
+  }
+
 
   return (
     <form
@@ -33,21 +76,27 @@ const AddNoteForm = (props) => {
         type="text"
         label="Заголовок заметки"
         value={newNoteTitle}
-        onInput={(event) => setNewNoteTitle(event.target.value)}
+        error={errorTitle}
+        onInput={onInput}
         ref={newNoteInputRef}
       />
       <Field
         className="note__field"
         id="note-content"
-        type="text"
+        type="textarea"
         label="Текст заметки..."
+        rows={30}
+        cols={50}
+        maxLength={255}
         value={newNoteContent}
-        onInput={(event) => setNewNoteContent(event.target.value)}
+        error={errorContent}
+        onInput={onInput}
       />
       <Button
         className="note__button"
         type="submit"
         title="Добавить заметку"
+        isDisabled={isNewNoteTitleEmpty || newNoteContent.trim().length === 0}
       >Добавить заметку</Button>
     </form>
   )

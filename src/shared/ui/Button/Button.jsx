@@ -6,14 +6,16 @@ const Button = (props) => {
     children,
     type = "button",
     title,
-    allWidth,
+    fullWidth,
+    isDisabled,
     onClick,
   } = props
 
   return (
     <button
-      className={`${s.button} ${className} ${allWidth ? s.width : ''}`}
+      className={`${s.button} ${className} ${fullWidth ? s.width : ''}`}
       type={type}
+      disabled={isDisabled}
       title={title}
       aria-label={title}
       onClick={onClick}

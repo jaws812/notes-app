@@ -1,3 +1,7 @@
+.field{
+  position: relative;
+}
+
 .input {
   --fieldInputPaddingX: 14px;
   color: var(--color-gray-8);
@@ -17,6 +21,10 @@
     background-color: var(--color-gray-1);
     outline: none;
   }
+
+  &.isInvalid{
+    border-color: red;
+  }
 }
 
 .label{
@@ -24,8 +32,11 @@
   margin-bottom: 8px;
 }
 
+.textarea{
+  min-height: 200px;
+}
+
 .error {
-  display: none;
   position: absolute;
   top: 100%;
   left: 0;
