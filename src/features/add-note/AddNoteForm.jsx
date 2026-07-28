@@ -32,24 +32,6 @@ const AddNoteForm = (props) => {
     }
   }
 
-  // const onInputTitle = (event) => {
-  //   const {value} = event.target
-  //   const clearValue = value.trim()
-  //   const hasOnlySpaces = value.length > 0 && clearValue.length === 0
-  //
-  //   setNewNoteTitle(value)
-  //   setErrorTitle(hasOnlySpaces ? 'Заголовок не может быть пустым' : '')
-  // }
-  //
-  // const onInputContent = (event) => {
-  //   const {value} = event.target
-  //   const clearValue = value.trim()
-  //   const hasOnlySpaces = value.length > 0 && clearValue.length === 0
-  //
-  //   setNewNoteContent(value)
-  //   setErrorContent(hasOnlySpaces ? 'Текст для заметки не может быть пустым' : '')
-  // }
-
   const onInput = (event) => {
     const {value, id} = event.target
     const clearValue = value.trim()
@@ -61,7 +43,7 @@ const AddNoteForm = (props) => {
     } else if (id === 'note-content') {
       setNewNoteContent(value)
       setErrorContent(hasOnlySpaces ? 'Контент заметки не может быть пустым' : '')
-    } else return console.log("Error onInput!!")
+    }
   }
 
 
@@ -87,7 +69,7 @@ const AddNoteForm = (props) => {
         label="Текст заметки..."
         rows={30}
         cols={50}
-        maxLength={255}
+        maxLength={1000}
         value={newNoteContent}
         error={errorContent}
         onInput={onInput}

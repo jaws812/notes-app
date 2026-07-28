@@ -33,7 +33,10 @@
 }
 
 .textarea{
+  resize: vertical;
   min-height: 200px;
+  max-height: 50vh;
+  padding: 10px;
 }
 
 .error {

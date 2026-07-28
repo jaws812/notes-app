@@ -27,7 +27,7 @@ const Field = (props) => {
       <Component
         className={`
           ${css.input} 
-          ${error ? 'is-invalid' : ''} 
+          ${error ? css.isInvalid : ''} 
           ${type === 'textarea' ? css.textarea : ''}
         `}
         id={id}
