@@ -1,1 +1,1 @@
-{}
+{notes:[{id:'2',title:'Погладить кота',content:'Сегодня вечером',isDone:false},{id:'3',title:'Построить дом',content:'Лес, озеро',isDone:true},{title:'1',content:'1',isDone:false,id:'3HjmRLm767A'},{title:'2',content:'2',isDone:true,id:'AogUxIyUG8g'}],$schema:'./node_modules/json-server/schema.json'}

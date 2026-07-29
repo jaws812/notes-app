@@ -1,32 +1,7 @@
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
-import useNotesLocalStorage from "./useNotesLocalStorage";
 
 const useNotes = () => {
-  const {
-    savedNotes,
-    saveNotes
-  } = useNotesLocalStorage()
-
-  const [notes, setNotes] = useState(savedNotes ?? [
-    {
-      id: 1,
-      title: "Купить продукты",
-      content: "Молоко, мед, творог",
-      isDone: true,
-    },
-    {
-      id: 2,
-      title: "Погладить кота",
-      content: "Сегодня вечером",
-      isDone: false,
-    },
-    {
-      id: 3,
-      title: "Построить дом",
-      content: "Лес, озеро",
-      isDone: true,
-    },
-  ])
+  const [notes, setNotes] = useState([])
   const [newNoteTitle, setNewNoteTitle] = useState('')
   const [newNoteContent, setNewNoteContent] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
@@ -37,50 +12,82 @@ const useNotes = () => {
     const isConfirm = confirm('Вы уверены, что хотите удалить все задачи?')
 
     if (isConfirm) {
-      setNotes([])
+      Promise.all(
+        notes.map(({id}) => {
+          return fetch(`http://localhost:3001/notes/${id}`, {
+            method: 'DELETE',
+          })
+        })
+      )
+        .then(() => setNotes([]))
     }
-  }, [])
+  }, [notes])
 
   const deleteNote = useCallback((noteId) => {
-    setNotes(
-      notes.filter((note) => note.id !== noteId)
-    )
+    fetch(`http://localhost:3001/notes/${noteId}`, {
+      method: 'DELETE',
+    })
+      .then(() => {
+        setNotes(
+          notes.filter((note) => note.id !== noteId)
+        )
+      })
   }, [notes])
 
   const toggleNoteComplete = useCallback((noteId, isDone) => {
-    setNotes(
-      notes.map((note) => {
-        if (note.id === noteId) {
-          return {...note, isDone}
-        }
 
-        return note
+    fetch(`http://localhost:3001/notes/${noteId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({isDone})
+    })
+      .then(() => {
+        setNotes(
+          notes.map((note) => {
+            if (note.id === noteId) {
+              return {...note, isDone}
+            }
+
+            return note
+          })
+        )
       })
-    )
   }, [notes])
 
   const addNote = useCallback((title, content) => {
     const newNote = {
-      id: crypto?.randomUUID() ?? Date.now().toString(),
       title,
       content,
       isDone: false,
     }
 
-    setNotes(prevNotes => [...prevNotes, newNote])
-    setNewNoteTitle('')
-    setNewNoteContent('')
-    setSearchQuery('')
-    newNoteInputRef.current.focus()
+    fetch('http://localhost:3001/notes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newNote)
+    })
+      .then((response) => response.json())
+      .then((addedNote) => {
+        setNotes(prevNotes => [...prevNotes, addedNote])
+        setNewNoteTitle('')
+        setNewNoteContent('')
+        setSearchQuery('')
+        newNoteInputRef.current.focus()
+      })
   }, [newNoteContent])
 
   useEffect(() => {
-    saveNotes(notes)
-  }, [notes]);
-
-  useEffect(() => {
     newNoteInputRef.current.focus()
+
+    fetch('http://localhost:3001/notes')
+      .then((response) => response.json())
+      .then(setNotes)
   }, []);
+
 
   const filteredNotes = useMemo(() => {
     const clearSearchQuery = searchQuery.trim().toLowerCase()
