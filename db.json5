@@ -1,1 +1,28 @@
-{notes:[{title:'fdsf',content:'sdfsff',isDone:false,id:'I3DyUCtLwe8'},{title:'f sds',content:'fds',isDone:false,id:'hG2RNe7TjX0'},{title:'ewqeqw',content:'ewqeq e qwe qew ew',isDone:false,id:'sYwZKDWiTqA'}],$schema:'./node_modules/json-server/schema.json'}
+{
+  notes: [
+    {
+      title: 'dsadsa',
+      content: 'dsadsa',
+      isDone: false,
+      id: '9__OvF88hRM'
+    },
+    {
+      title: 'выф ук уцк  уц',
+      content: 'а выаыв авы',
+      isDone: true,
+      id: 'sQkhL-ZzY3U'
+    },
+    {
+      title: 'к уцк цуаыв',
+      content: 'а выа выавы',
+      isDone: true,
+      id: 'UMPH6jsnMfY'
+    },    {
+      title: 'qqqqq',
+      content: 'wwwwwww',
+      isDone: true,
+      id: '123'
+    }
+  ],
+  $schema: './node_modules/json-server/schema.json'
+}

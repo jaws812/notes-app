@@ -1,12 +1,16 @@
-import Note from "../widgets/Note/Note";
+import NotesPage from "../pages/NotesPage/NotesPage";
+import NotePage from "../pages/NotePage/NotePage";
 import './styles'
-import {NotesProvider} from "../entities/note/model/NotesContext";
+import Router from "./routing/Router";
 
 const App = () => {
+  const routes = {
+    '/': NotesPage,
+    '/notes/123': NotePage,
+    '*': ()=><div>Страница не найдена</div>,
+  }
   return (
-    <NotesProvider>
-      <Note />
-    </NotesProvider>
+  <Router routes={routes} />
   )
 }
 

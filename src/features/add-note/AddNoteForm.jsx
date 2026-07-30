@@ -1,7 +1,7 @@
-import Field from "../../shared/ui/Field/Field";
-import Button from "../../shared/ui/Button/Button";
 import {useContext, useState} from "react";
 import {NotesContext} from "../../entities/note/model/NotesContext";
+import Field from "../../shared/ui/Field/Field";
+import Button from "../../shared/ui/Button/Button";
 
 const AddNoteForm = (props) => {
   const {
