@@ -1,4 +1,5 @@
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
+import notesAPI from "../../../shared/api/notes/notesAPI";
 
 const useNotes = () => {
   const [notes, setNotes] = useState([])
@@ -12,21 +13,13 @@ const useNotes = () => {
     const isConfirm = confirm('Вы уверены, что хотите удалить все задачи?')
 
     if (isConfirm) {
-      Promise.all(
-        notes.map(({id}) => {
-          return fetch(`http://localhost:3001/notes/${id}`, {
-            method: 'DELETE',
-          })
-        })
-      )
+      notesAPI.deleteAll(notes)
         .then(() => setNotes([]))
     }
   }, [notes])
 
   const deleteNote = useCallback((noteId) => {
-    fetch(`http://localhost:3001/notes/${noteId}`, {
-      method: 'DELETE',
-    })
+    notesAPI.delete(noteId)
       .then(() => {
         setNotes(
           notes.filter((note) => note.id !== noteId)
@@ -36,13 +29,7 @@ const useNotes = () => {
 
   const toggleNoteComplete = useCallback((noteId, isDone) => {
 
-    fetch(`http://localhost:3001/notes/${noteId}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({isDone})
-    })
+    notesAPI.toggleComplete(noteId, isDone)
       .then(() => {
         setNotes(
           notes.map((note) => {
@@ -63,14 +50,7 @@ const useNotes = () => {
       isDone: false,
     }
 
-    fetch('http://localhost:3001/notes', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newNote)
-    })
-      .then((response) => response.json())
+    notesAPI.add(newNote)
       .then((addedNote) => {
         setNotes(prevNotes => [...prevNotes, addedNote])
         setNewNoteTitle('')
@@ -78,14 +58,12 @@ const useNotes = () => {
         setSearchQuery('')
         newNoteInputRef.current.focus()
       })
-  }, [newNoteContent])
+  }, [])
 
   useEffect(() => {
     newNoteInputRef.current.focus()
 
-    fetch('http://localhost:3001/notes')
-      .then((response) => response.json())
-      .then(setNotes)
+    notesAPI.getAll().then(setNotes)
   }, []);
 
 
