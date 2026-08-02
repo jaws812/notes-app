@@ -1,6 +1,7 @@
 import {memo, useContext} from 'react'
+import {NotesContext} from "@/entities/note";
+import RouterLink from "@/shared/ui/RouterLink";
 import css from './NoteItem.module.scss'
-import {NotesContext} from "../../model/NotesContext";
 
 const NoteItem = (props) => {
   const {
@@ -15,11 +16,13 @@ const NoteItem = (props) => {
     firstIncompleteNoteId,
     deleteNote,
     toggleNoteComplete,
+    disappearingNoteId,
+    appearingNoteId,
   } = useContext(NotesContext)
 
   return (
     <li
-      className={css.noteItem}
+      className={`${css.noteItem} ${disappearingNoteId === id ? css.isDisappearing : ''} ${appearingNoteId === id ? css.isAppearing : ''}`}
       ref={id === firstIncompleteNoteId ? firstIncompleteNoteRef : null}
     >
       <input
@@ -32,7 +35,16 @@ const NoteItem = (props) => {
         }}
       />
       <div className={css.body}>
-        <div className={css.title}>{title}</div>
+        <label
+          htmlFor={id}
+          className={`${css.title} visually-hidden`}
+        >{title}</label>
+        <RouterLink
+          to={`/notes/${id}`}
+          aria-label="Детальная страница заметки"
+        >
+          {title}
+        </RouterLink>
         <div className={css.content}>{content}</div>
       </div>
       <div className={css.actions}>

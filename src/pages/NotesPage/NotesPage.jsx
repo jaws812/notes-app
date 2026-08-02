@@ -1,5 +1,5 @@
-import {NotesProvider} from "../../entities/note/model/NotesContext";
-import Note from "../../widgets/Note/Note";
+import {NotesProvider} from "@/entities/note";
+import Note from "@/widgets/Note";
 
 const NotesPage = () => {
   return (

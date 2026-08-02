@@ -1,6 +1,6 @@
-import Field from "../../shared/ui/Field/Field";
+import Field from "@/shared/ui/Field";
 import {useContext} from "react";
-import {NotesContext} from "../../entities/note/model/NotesContext";
+import {NotesContext} from "@/entities/note";
 
 const SearchNoteFrom = (props) => {
   const {

@@ -1,8 +1,9 @@
 import {useEffect, useState} from "react";
-import notesAPI from "../../shared/api/notes/notesAPI";
+import notesAPI from "@/shared/api/notes";
 
-const NotePage = () => {
-  const noteId = '123'
+const NotePage = (props) => {
+  const {params} = props
+  const noteId = params.id
 
   const [note, setNote] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -10,14 +11,14 @@ const NotePage = () => {
 
   useEffect(() => {
     notesAPI.getById(noteId)
-      .then((noteData)=>{
+      .then((noteData) => {
         setNote(noteData)
         setHasError(false)
       })
-      .catch(()=>{
+      .catch(() => {
         setHasError(true)
       })
-      .finally(()=>{
+      .finally(() => {
         setIsLoading(false)
       })
   }, []);
@@ -26,7 +27,7 @@ const NotePage = () => {
     return <div>Загрузка...</div>
   }
 
-  if(hasError){
+  if (hasError) {
     return <div>Задача не найдена!</div>
   }
 

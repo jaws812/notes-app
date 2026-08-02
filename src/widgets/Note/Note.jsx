@@ -1,12 +1,10 @@
-import {
-  useContext,
-} from "react";
-import AddNoteForm from "../../features/add-note/AddNoteForm";
-import SearchNoteFrom from "../../features/search-notes/SearchNoteFrom";
-import NoteInfo from "../../features/stats/NoteInfo";
-import NoteList from "../../entities/note/ui/NoteList/NoteList";
-import Button from "../../shared/ui/Button/Button";
-import {NotesContext} from "../../entities/note/model/NotesContext";
+import {useContext} from "react";
+import AddNoteForm from "@/features/add-note";
+import SearchNoteFrom from "@/features/search-notes";
+import NoteInfo from "@/features/stats";
+import {NoteList} from "@/entities/note";
+import Button from "@/shared/ui/Button";
+import {NotesContext} from "@/entities/note";
 import css from './Note.module.scss'
 
 const Note = () => {

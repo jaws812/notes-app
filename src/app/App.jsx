@@ -1,16 +1,16 @@
-import NotesPage from "../pages/NotesPage/NotesPage";
-import NotePage from "../pages/NotePage/NotePage";
-import './styles'
 import Router from "./routing/Router";
+import NotesPage from "@/pages/NotesPage";
+import NotePage from "@/pages/NotePage";
+import './styles'
 
 const App = () => {
   const routes = {
     '/': NotesPage,
-    '/notes/123': NotePage,
-    '*': ()=><div>Страница не найдена</div>,
+    '/notes/:id': NotePage,
+    '*': () => <div>Страница не найдена</div>,
   }
   return (
-  <Router routes={routes} />
+    <Router routes={routes} />
   )
 }
 

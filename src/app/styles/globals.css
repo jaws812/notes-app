@@ -6,6 +6,7 @@ body {
   padding: 100px 30px;
   font-family: 'Inter', sans-serif;
   font-size: 15px;
+  color: var(--color-gray-8);
   background-color: var(--color-black);
 }
 

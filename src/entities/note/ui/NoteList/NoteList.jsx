@@ -1,6 +1,5 @@
 import {memo, useContext} from 'react'
-import NoteItem from "../NoteItem/NoteItem";
-import {NotesContext} from "../../model/NotesContext";
+import {NoteItem, NotesContext} from "@/entities/note";
 
 const NoteList = (props) => {
   const {

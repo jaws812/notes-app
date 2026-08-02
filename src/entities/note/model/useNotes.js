@@ -1,11 +1,13 @@
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
-import notesAPI from "../../../shared/api/notes/notesAPI";
+import notesAPI from "@/shared/api/notes";
 
 const useNotes = () => {
   const [notes, setNotes] = useState([])
   const [newNoteTitle, setNewNoteTitle] = useState('')
   const [newNoteContent, setNewNoteContent] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
+  const [disappearingNoteId, setDisappearingNoteId] = useState(null)
+  const [appearingNoteId, setAppearingNoteId] = useState(null)
 
   const newNoteInputRef = useRef(null)
 
@@ -21,9 +23,13 @@ const useNotes = () => {
   const deleteNote = useCallback((noteId) => {
     notesAPI.delete(noteId)
       .then(() => {
-        setNotes(
-          notes.filter((note) => note.id !== noteId)
-        )
+        setDisappearingNoteId(noteId)
+        setTimeout(() => {
+          setNotes(
+            notes.filter((note) => note.id !== noteId)
+          )
+          setDisappearingNoteId(null)
+        }, 400)
       })
   }, [notes])
 
@@ -57,6 +63,10 @@ const useNotes = () => {
         setNewNoteContent('')
         setSearchQuery('')
         newNoteInputRef.current.focus()
+        setAppearingNoteId(addedNote.id)
+        setTimeout(()=>{
+          setAppearingNoteId(null)
+        },400)
       })
   }, [])
 
@@ -92,6 +102,8 @@ const useNotes = () => {
     searchQuery,
     setSearchQuery,
     addNote,
+    disappearingNoteId,
+    appearingNoteId,
   }
 }
 

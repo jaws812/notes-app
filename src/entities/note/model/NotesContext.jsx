@@ -1,6 +1,4 @@
-import {
-  createContext,
-} from "react"
+import { createContext } from "react"
 import useNotes from "./useNotes";
 import useIncompleteNoteScroll from "./useIncompleteNoteScroll";
 
@@ -25,6 +23,8 @@ export const NotesProvider = (props) => {
     searchQuery,
     setSearchQuery,
     addNote,
+    disappearingNoteId,
+    appearingNoteId,
   } = useNotes()
 
   const {
@@ -50,6 +50,8 @@ export const NotesProvider = (props) => {
         searchQuery,
         setSearchQuery,
         addNote,
+        disappearingNoteId,
+        appearingNoteId,
       }}
     >
       {children}
