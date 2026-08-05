@@ -1,4 +1,4 @@
-import { createContext } from "react"
+import {createContext, useMemo} from "react"
 import useNotes from "./useNotes";
 import useIncompleteNoteScroll from "./useIncompleteNoteScroll";
 
@@ -32,28 +32,46 @@ export const NotesProvider = (props) => {
     firstIncompleteNoteId,
   } = useIncompleteNoteScroll(notes)
 
+  const value = useMemo(() => ({
+    notes,
+    filteredNotes,
+    deleteNote,
+    deleteAllNotes,
+    toggleNoteComplete,
+    newNoteTitle,
+    setNewNoteTitle,
+    newNoteContent,
+    setNewNoteContent,
+    newNoteInputRef,
+    searchQuery,
+    setSearchQuery,
+    addNote,
+    disappearingNoteId,
+    appearingNoteId,
+    firstIncompleteNoteRef,
+    firstIncompleteNoteId,
+  }), [
+    notes,
+    filteredNotes,
+    deleteNote,
+    deleteAllNotes,
+    toggleNoteComplete,
+    newNoteTitle,
+    setNewNoteTitle,
+    newNoteContent,
+    setNewNoteContent,
+    newNoteInputRef,
+    searchQuery,
+    setSearchQuery,
+    addNote,
+    disappearingNoteId,
+    appearingNoteId,
+    firstIncompleteNoteRef,
+    firstIncompleteNoteId,
+  ])
+
   return (
-    <NotesContext.Provider
-      value={{
-        notes,
-        filteredNotes,
-        firstIncompleteNoteRef,
-        firstIncompleteNoteId,
-        deleteNote,
-        deleteAllNotes,
-        toggleNoteComplete,
-        newNoteTitle,
-        setNewNoteTitle,
-        newNoteContent,
-        setNewNoteContent,
-        newNoteInputRef,
-        searchQuery,
-        setSearchQuery,
-        addNote,
-        disappearingNoteId,
-        appearingNoteId,
-      }}
-    >
+    <NotesContext.Provider value={value}>
       {children}
     </NotesContext.Provider>
   )

@@ -1,8 +1,49 @@
-import {useCallback, useEffect, useMemo, useRef, useState} from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo, useReducer,
+  useRef,
+  useState,
+} from "react";
 import notesAPI from "@/shared/api/notes";
 
+// в state будет храниться наше состояние - массив заметок
+/* в action будет приходить объект у которого гарантированно будет свойство
+type и опционально дополнительные данные*/
+/*
+* в значении свойства type будет строка в скримминг-снейк-кейс нотации, данная
+* строка будет описывать выполняемое действие над данными
+* */
+const notesReducer = (state, action) => {
+  switch (action.type) {
+    case 'SET_ALL': {
+      return Array.isArray(action.notes) ? action.notes : state
+    }
+    case 'ADD': {
+      return [...state, action.note]
+    }
+    case 'TOGGLE_COMPLETE': {
+      const {id, isDone} = action
+
+      return state.map((note) => {
+        return note.id === id ? {...note, isDone} : note
+      })
+    }
+    case 'DELETE': {
+      return state.filter((note) => note.id !== action.id)
+    }
+    case 'DELETE_ALL': {
+      return []
+    }
+    default: {
+      return state
+    }
+  }
+}
+
+
 const useNotes = () => {
-  const [notes, setNotes] = useState([])
+  const [notes, dispatch] = useReducer(notesReducer, [])
   const [newNoteTitle, setNewNoteTitle] = useState('')
   const [newNoteContent, setNewNoteContent] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
@@ -16,7 +57,7 @@ const useNotes = () => {
 
     if (isConfirm) {
       notesAPI.deleteAll(notes)
-        .then(() => setNotes([]))
+        .then(() => dispatch({type: 'DELETE_ALL'}))
     }
   }, [notes])
 
@@ -25,29 +66,18 @@ const useNotes = () => {
       .then(() => {
         setDisappearingNoteId(noteId)
         setTimeout(() => {
-          setNotes(
-            notes.filter((note) => note.id !== noteId)
-          )
+          dispatch({type: 'DELETE', id: noteId})
           setDisappearingNoteId(null)
         }, 400)
       })
-  }, [notes])
+  }, [])
 
   const toggleNoteComplete = useCallback((noteId, isDone) => {
-
     notesAPI.toggleComplete(noteId, isDone)
       .then(() => {
-        setNotes(
-          notes.map((note) => {
-            if (note.id === noteId) {
-              return {...note, isDone}
-            }
-
-            return note
-          })
-        )
+        dispatch({type: 'TOGGLE_COMPLETE', id: noteId, isDone})
       })
-  }, [notes])
+  }, [])
 
   const addNote = useCallback((title, content) => {
     const newNote = {
@@ -58,22 +88,24 @@ const useNotes = () => {
 
     notesAPI.add(newNote)
       .then((addedNote) => {
-        setNotes(prevNotes => [...prevNotes, addedNote])
+        dispatch({type: 'ADD', note: addedNote})
         setNewNoteTitle('')
         setNewNoteContent('')
         setSearchQuery('')
         newNoteInputRef.current.focus()
         setAppearingNoteId(addedNote.id)
-        setTimeout(()=>{
+        setTimeout(() => {
           setAppearingNoteId(null)
-        },400)
+        }, 400)
       })
   }, [])
 
   useEffect(() => {
     newNoteInputRef.current.focus()
 
-    notesAPI.getAll().then(setNotes)
+    notesAPI.getAll().then((serverNotes) => {
+      dispatch({type: 'SET_ALL', notes: serverNotes})
+    })
   }, []);
 
 
