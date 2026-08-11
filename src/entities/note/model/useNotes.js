@@ -108,7 +108,6 @@ const useNotes = () => {
     })
   }, []);
 
-
   const filteredNotes = useMemo(() => {
     const clearSearchQuery = searchQuery.trim().toLowerCase()
 
