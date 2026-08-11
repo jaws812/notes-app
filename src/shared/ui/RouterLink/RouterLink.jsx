@@ -1,5 +1,6 @@
 const RouterLink = (props) => {
   const {
+    className='',
     to,
     children,
     ...rest
@@ -13,6 +14,7 @@ const RouterLink = (props) => {
 
   return (
     <a
+      className={className}
       href={to}
       onClick={handleClick}
       {...rest}

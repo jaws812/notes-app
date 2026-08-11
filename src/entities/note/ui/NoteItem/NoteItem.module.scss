@@ -41,6 +41,8 @@
   font-size: 18px;
   font-weight: 600;
   line-height: 26px;
+  color: inherit;
+  text-decoration: none;
 }
 
 .content {
@@ -64,6 +66,7 @@
 .link {
   height: 100%;
   padding-block: 2px;
+  color: inherit;
 }
 
 .deleteButton {

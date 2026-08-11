@@ -18,7 +18,13 @@ const NoteItem = (props) => {
     toggleNoteComplete,
     disappearingNoteId,
     appearingNoteId,
+    searchQuery,
   } = useContext(NotesContext)
+
+  const highlightedTitle = title.replaceAll(
+    new RegExp(searchQuery, 'gi'), // поиск вхождений в обоих регистрах
+    `<mark>$&</mark>`
+  )
 
   return (
     <li
@@ -37,20 +43,23 @@ const NoteItem = (props) => {
       <div className={css.body}>
         <label
           htmlFor={id}
-          className={`${css.title} visually-hidden`}
+          className='visually-hidden'
         >{title}</label>
         <RouterLink
+          className={css.title}
           to={`/notes/${id}`}
           aria-label="Детальная страница заметки"
         >
-          {title}
+          {/*{title}*/}
+          <span dangerouslySetInnerHTML={{ __html: highlightedTitle}}/>
         </RouterLink>
         <div className={css.content}>{content}</div>
       </div>
       <div className={css.actions}>
-        <a
+        <RouterLink
           className={css.link}
-          href="/"
+          to={`/notes/${id}`}
+          aria-label='Детальная страница заметки'
         >
           <svg
             width="16"
@@ -67,7 +76,7 @@ const NoteItem = (props) => {
               strokeLinejoin="round"
             />
           </svg>
-        </a>
+        </RouterLink>
         <button
           className={css.deleteButton}
           type="button"
