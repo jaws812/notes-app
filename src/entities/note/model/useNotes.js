@@ -53,14 +53,10 @@ const useNotes = () => {
   const [isShowCompletedNotes, setIsShowCompletedNotes] = useState(false)
   const [isShowUnCompletedNotes, setIsShowUnCompletedNotes] = useState(false)
 
-  // let isShowAllNotes = false
-  // let isShowCompletedNotes = false
-  // let isShowUnCompletedNotes = false
-
   const newNoteInputRef = useRef(null)
 
   const deleteAllNotes = useCallback(() => {
-    const isConfirm = confirm('Вы уверены, что хотите удалить все задачи?')
+    const isConfirm = confirm('Вы уверены, что хотите удалить все заметки?')
 
     if (isConfirm) {
       notesAPI.deleteAll(notes)
@@ -118,13 +114,29 @@ const useNotes = () => {
   const filteredNotes = useMemo(() => {
     const clearSearchQuery = searchQuery.trim().toLowerCase()
 
+    let filterNotes = null
+
+    if (isShowCompletedNotes) {
+      filterNotes = notes.filter(({isDone}) => isDone === true)
+    } else if (isShowUnCompletedNotes) {
+      filterNotes = notes.filter(({isDone}) => isDone === false)
+    } else {
+      filterNotes = notes
+    }
+
     return clearSearchQuery.length > 0
-      ? notes.filter(({title, content}) =>
+      ? filterNotes.filter(({title, content}) =>
         title.toLowerCase().includes(clearSearchQuery) ||
         content.toLowerCase().includes(clearSearchQuery)
       )
-      : null
-  }, [notes, searchQuery])
+      : filterNotes
+  }, [
+    notes,
+    searchQuery,
+    isShowAllNotes,
+    isShowCompletedNotes,
+    isShowUnCompletedNotes
+  ])
 
   return {
     notes,

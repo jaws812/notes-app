@@ -28,7 +28,7 @@ const Note = () => {
           () => firstIncompleteNoteRef.current?.scrollIntoView({behavior: 'smooth'})
         }
         fullWidth
-      >Перейти к первой невыполненной задаче</Button>
+      >Перейти к первой невыполненной заметке</Button>
       <FilterNotes css={css}/>
       <NoteList
         css={css}

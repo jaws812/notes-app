@@ -8,7 +8,6 @@ const FilterNotes = (props) => {
   } = props
 
   const {
-    notes,
     isShowAllNotes,
     isShowCompletedNotes,
     isShowUnCompletedNotes,
@@ -46,12 +45,12 @@ const FilterNotes = (props) => {
         className={`${css.filterButton} ${isShowCompletedNotes === true ? css.active : ''}`}
         title='Завершенные заметки'
         onClick={showCompletedNotes}
-      >Завершенные</Button>
+      >Выполненные</Button>
       <Button
         className={`${css.filterButton} ${isShowUnCompletedNotes === true ? css.active : ''}`}
         title='Незавершенные заметки'
         onClick={showUnCompletedNotes}
-      >Незавершенные</Button>
+      >Активные</Button>
     </div>
   )
 }

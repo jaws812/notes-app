@@ -9,46 +9,35 @@ const NoteList = (props) => {
   const {
     notes,
     filteredNotes,
-    isShowAllNotes,
-    isShowCompletedNotes,
-    isShowUnCompletedNotes,
+    // isShowCompletedNotes,
+    // isShowUnCompletedNotes,
   } = useContext(NotesContext)
 
-  let resultNotes = []
-
-  if (isShowCompletedNotes) {
-    resultNotes = notes.filter(({isDone}) => isDone === true)
-  } else if (isShowUnCompletedNotes) {
-    resultNotes = notes.filter(({isDone}) => isDone === false)
-  } else {
-    resultNotes = notes
-  }
-
-  const hasNotes = resultNotes.length > 0
+  const hasNotes = filteredNotes.length > 0
   const isEmptyFilteredNotes = filteredNotes?.length === 0
 
+  console.log('hasNotes - заметки есть?', hasNotes)
+  console.log('isEmptyFilteredNotes - заметки по поиску есть? ', isEmptyFilteredNotes)
+
   if (!hasNotes) {
-    return (<div className={css.emptyMessage}>Задач нет</div>)
+    return (<div className={css.emptyMessage}>Заметок нет</div>)
   }
 
   if (hasNotes && isEmptyFilteredNotes) {
-    return (<div className={css.emptyMessage}>Задачи не найдены</div>)
+    return (<div className={css.emptyMessage}>Заметки не найдены</div>)
   }
+  // else if (hasNotes && isEmptyFilteredNotes && isShowUnCompletedNotes) {
+  //   return (<div className={css.emptyMessage}>Активные заметки не найдены</div>)
+  // }
 
   return (
     <ul className={css.list}>
-      {resultNotes.map((note) => (
+      {filteredNotes.map((note) => (
         <NoteItem
           key={note.id}
           {...note}
         />
       ))}
-      {/*{(filteredNotes ?? notes).map((note) => (*/}
-      {/*  <NoteItem*/}
-      {/*    key={note.id}*/}
-      {/*    {...note}*/}
-      {/*  />*/}
-      {/*))}*/}
     </ul>
   )
 }

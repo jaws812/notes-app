@@ -28,7 +28,7 @@ const NotePage = (props) => {
   }
 
   if (hasError) {
-    return <div>Задача не найдена!</div>
+    return <div>Заметка не найдена!</div>
   }
 
   return (
