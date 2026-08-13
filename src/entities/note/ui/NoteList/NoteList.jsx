@@ -9,9 +9,22 @@ const NoteList = (props) => {
   const {
     notes,
     filteredNotes,
+    isShowAllNotes,
+    isShowCompletedNotes,
+    isShowUnCompletedNotes,
   } = useContext(NotesContext)
 
-  const hasNotes = notes.length > 0
+  let resultNotes = []
+
+  if (isShowCompletedNotes) {
+    resultNotes = notes.filter(({isDone}) => isDone === true)
+  } else if (isShowUnCompletedNotes) {
+    resultNotes = notes.filter(({isDone}) => isDone === false)
+  } else {
+    resultNotes = notes
+  }
+
+  const hasNotes = resultNotes.length > 0
   const isEmptyFilteredNotes = filteredNotes?.length === 0
 
   if (!hasNotes) {
@@ -22,15 +35,20 @@ const NoteList = (props) => {
     return (<div className={css.emptyMessage}>Задачи не найдены</div>)
   }
 
-
   return (
     <ul className={css.list}>
-      {(filteredNotes ?? notes).map((note) => (
+      {resultNotes.map((note) => (
         <NoteItem
           key={note.id}
           {...note}
         />
       ))}
+      {/*{(filteredNotes ?? notes).map((note) => (*/}
+      {/*  <NoteItem*/}
+      {/*    key={note.id}*/}
+      {/*    {...note}*/}
+      {/*  />*/}
+      {/*))}*/}
     </ul>
   )
 }

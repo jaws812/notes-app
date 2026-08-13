@@ -62,3 +62,19 @@
   text-align: center;
   color: var(--color-gray-8);
 }
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+}
+
+.filterButton{
+  opacity: 0.5;
+}
+
+.active{
+  opacity: 1;
+}

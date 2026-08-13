@@ -49,6 +49,13 @@ const useNotes = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [disappearingNoteId, setDisappearingNoteId] = useState(null)
   const [appearingNoteId, setAppearingNoteId] = useState(null)
+  const [isShowAllNotes, setIsShowAllNotes] = useState(true)
+  const [isShowCompletedNotes, setIsShowCompletedNotes] = useState(false)
+  const [isShowUnCompletedNotes, setIsShowUnCompletedNotes] = useState(false)
+
+  // let isShowAllNotes = false
+  // let isShowCompletedNotes = false
+  // let isShowUnCompletedNotes = false
 
   const newNoteInputRef = useRef(null)
 
@@ -136,6 +143,12 @@ const useNotes = () => {
     addNote,
     disappearingNoteId,
     appearingNoteId,
+    isShowAllNotes,
+    isShowCompletedNotes,
+    isShowUnCompletedNotes,
+    setIsShowAllNotes,
+    setIsShowCompletedNotes,
+    setIsShowUnCompletedNotes,
   }
 }
 

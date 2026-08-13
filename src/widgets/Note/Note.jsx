@@ -1,6 +1,7 @@
 import {useContext} from "react";
 import AddNoteForm from "@/features/add-note";
 import SearchNoteFrom from "@/features/search-notes";
+import FilterNotes from "@/features/filter-notes";
 import NoteInfo from "@/features/stats";
 import {NoteList} from "@/entities/note";
 import Button from "@/shared/ui/Button";
@@ -28,6 +29,7 @@ const Note = () => {
         }
         fullWidth
       >Перейти к первой невыполненной задаче</Button>
+      <FilterNotes css={css}/>
       <NoteList
         css={css}
       />

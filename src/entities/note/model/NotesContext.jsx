@@ -25,6 +25,12 @@ export const NotesProvider = (props) => {
     addNote,
     disappearingNoteId,
     appearingNoteId,
+    isShowAllNotes,
+    isShowCompletedNotes,
+    isShowUnCompletedNotes,
+    setIsShowAllNotes,
+    setIsShowCompletedNotes,
+    setIsShowUnCompletedNotes,
   } = useNotes()
 
   const {
@@ -48,6 +54,12 @@ export const NotesProvider = (props) => {
     addNote,
     disappearingNoteId,
     appearingNoteId,
+    isShowAllNotes,
+    isShowCompletedNotes,
+    isShowUnCompletedNotes,
+    setIsShowAllNotes,
+    setIsShowCompletedNotes,
+    setIsShowUnCompletedNotes,
     firstIncompleteNoteRef,
     firstIncompleteNoteId,
   }), [
@@ -66,6 +78,12 @@ export const NotesProvider = (props) => {
     addNote,
     disappearingNoteId,
     appearingNoteId,
+    isShowAllNotes,
+    isShowCompletedNotes,
+    isShowUnCompletedNotes,
+    setIsShowAllNotes,
+    setIsShowCompletedNotes,
+    setIsShowUnCompletedNotes,
     firstIncompleteNoteRef,
     firstIncompleteNoteId,
   ])
