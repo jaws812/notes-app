@@ -2,6 +2,7 @@ import {memo, useContext} from 'react'
 import {NotesContext} from "@/entities/note";
 import RouterLink from "@/shared/ui/RouterLink";
 import css from './NoteItem.module.scss'
+import {highlightCaseInsensitive} from "@/shared/utils/highlight";
 
 const NoteItem = (props) => {
   const {
@@ -21,10 +22,7 @@ const NoteItem = (props) => {
     searchQuery,
   } = useContext(NotesContext)
 
-  const highlightedTitle = title.replaceAll(
-    new RegExp(searchQuery, 'gi'), // поиск вхождений в обоих регистрах
-    `<mark>$&</mark>`
-  )
+  const highlightedTitle = highlightCaseInsensitive(title, searchQuery)
 
   return (
     <li
@@ -50,8 +48,7 @@ const NoteItem = (props) => {
           to={`/notes/${id}`}
           aria-label="Детальная страница заметки"
         >
-          {/*{title}*/}
-          <span dangerouslySetInnerHTML={{ __html: highlightedTitle}}/>
+          <span dangerouslySetInnerHTML={{__html: highlightedTitle}} />
         </RouterLink>
         <div className={css.content}>{content}</div>
       </div>
