@@ -1,6 +1,6 @@
-import Button from "@/shared/ui/Button";
 import {useContext} from "react";
 import {NotesContext} from "@/entities/note";
+import Button from "@/shared/ui/Button";
 
 const FilterNotes = (props) => {
   const {

@@ -129,7 +129,7 @@ const useNotes = () => {
         title.toLowerCase().includes(clearSearchQuery) ||
         content.toLowerCase().includes(clearSearchQuery)
       )
-      : filterNotes
+      : null
   }, [
     notes,
     searchQuery,
