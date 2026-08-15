@@ -4,13 +4,17 @@ import SearchNoteFrom from "@/features/search-notes";
 import FilterNotes from "@/features/filter-notes";
 import NoteInfo from "@/features/stats";
 import {NoteList} from "@/entities/note";
-import Button from "@/shared/ui/Button";
 import {NotesContext} from "@/entities/note";
+import Button from "@/shared/ui/Button";
 import css from './Note.module.scss'
 
 const Note = () => {
 
-  const {firstIncompleteNoteRef} = useContext(NotesContext)
+  const {
+    firstIncompleteNoteRef,
+    isShowCompletedNotes,
+  } = useContext(NotesContext)
+
   return (
     <div className={css.note}>
       <h1 className={css.title}>Мои заметки</h1>
@@ -23,13 +27,15 @@ const Note = () => {
       <NoteInfo
         css={css}
       />
-      <Button
-        onClick={
-          () => firstIncompleteNoteRef.current?.scrollIntoView({behavior: 'smooth'})
-        }
-        fullWidth
-      >Перейти к первой невыполненной заметке</Button>
-      <FilterNotes css={css}/>
+      {(!isShowCompletedNotes && (
+        <Button
+          onClick={
+            () => firstIncompleteNoteRef.current?.scrollIntoView({behavior: 'smooth'})
+          }
+          fullWidth
+        >Перейти к первой невыполненной заметке</Button>
+      ))}
+      <FilterNotes css={css} />
       <NoteList
         css={css}
       />

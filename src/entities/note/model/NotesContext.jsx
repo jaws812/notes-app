@@ -11,6 +11,7 @@ export const NotesProvider = (props) => {
 
   const {
     notes,
+    actuallyNotes,
     filteredNotes,
     deleteNote,
     deleteAllNotes,
@@ -36,10 +37,11 @@ export const NotesProvider = (props) => {
   const {
     firstIncompleteNoteRef,
     firstIncompleteNoteId,
-  } = useIncompleteNoteScroll(notes)
+  } = useIncompleteNoteScroll(actuallyNotes)
 
   const value = useMemo(() => ({
     notes,
+    actuallyNotes,
     filteredNotes,
     deleteNote,
     deleteAllNotes,
@@ -64,6 +66,7 @@ export const NotesProvider = (props) => {
     firstIncompleteNoteId,
   }), [
     notes,
+    actuallyNotes,
     filteredNotes,
     deleteNote,
     deleteAllNotes,

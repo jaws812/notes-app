@@ -1,8 +1,8 @@
 import {memo, useContext} from 'react'
 import {NotesContext} from "@/entities/note";
 import RouterLink from "@/shared/ui/RouterLink";
-import css from './NoteItem.module.scss'
 import {highlightCaseInsensitive} from "@/shared/utils/highlight";
+import css from './NoteItem.module.scss'
 
 const NoteItem = (props) => {
   const {
