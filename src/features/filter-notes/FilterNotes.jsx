@@ -12,34 +12,22 @@ const FilterNotes = (props) => {
     setFilter
   } = useContext(NotesContext)
 
-  const showAllNotes = () => {
-    setFilter('all')
-  }
-
-  const showCompletedNotes = () => {
-    setFilter('completed')
-  }
-
-  const showUnCompletedNotes = () => {
-    setFilter('active')
-  }
-
   return (
     <div className={css.filter}>
       <Button
         className={`${css.filterButton} ${filter === 'all' ? css.active : ''}`}
-        title='Все заметки'
-        onClick={showAllNotes}
+        title="Все заметки"
+        onClick={() => setFilter('all')}
       >Все</Button>
       <Button
         className={`${css.filterButton} ${filter === 'completed' ? css.active : ''}`}
-        title='Завершенные заметки'
-        onClick={showCompletedNotes}
+        title="Завершенные заметки"
+        onClick={() => setFilter('completed')}
       >Выполненные</Button>
       <Button
         className={`${css.filterButton} ${filter === 'active' ? css.active : ''}`}
-        title='Незавершенные заметки'
-        onClick={showUnCompletedNotes}
+        title="Незавершенные заметки"
+        onClick={() => setFilter('active')}
       >Активные</Button>
     </div>
   )

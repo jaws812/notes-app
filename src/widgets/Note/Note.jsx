@@ -27,14 +27,14 @@ const Note = () => {
       <NoteInfo
         css={css}
       />
-      {(firstIncompleteNoteId && (
+      {firstIncompleteNoteId && (
         <Button
           onClick={
             () => firstIncompleteNoteRef.current?.scrollIntoView({behavior: 'smooth'})
           }
           fullWidth
         >Перейти к первой невыполненной заметке</Button>
-      ))}
+      )}
       <FilterNotes css={css} />
       <NoteList
         css={css}
