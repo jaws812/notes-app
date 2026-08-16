@@ -8,46 +8,36 @@ const FilterNotes = (props) => {
   } = props
 
   const {
-    isShowAllNotes,
-    isShowCompletedNotes,
-    isShowUnCompletedNotes,
-    setIsShowAllNotes,
-    setIsShowCompletedNotes,
-    setIsShowUnCompletedNotes,
+    filter,
+    setFilter
   } = useContext(NotesContext)
 
   const showAllNotes = () => {
-    setIsShowAllNotes(true)
-    setIsShowCompletedNotes(false)
-    setIsShowUnCompletedNotes(false)
+    setFilter('all')
   }
 
   const showCompletedNotes = () => {
-    setIsShowAllNotes(false)
-    setIsShowCompletedNotes(true)
-    setIsShowUnCompletedNotes(false)
+    setFilter('completed')
   }
 
   const showUnCompletedNotes = () => {
-    setIsShowAllNotes(false)
-    setIsShowCompletedNotes(false)
-    setIsShowUnCompletedNotes(true)
+    setFilter('active')
   }
 
   return (
     <div className={css.filter}>
       <Button
-        className={`${css.filterButton} ${isShowAllNotes === true ? css.active : ''}`}
-        title='Всё заметки'
+        className={`${css.filterButton} ${filter === 'all' ? css.active : ''}`}
+        title='Все заметки'
         onClick={showAllNotes}
       >Все</Button>
       <Button
-        className={`${css.filterButton} ${isShowCompletedNotes === true ? css.active : ''}`}
+        className={`${css.filterButton} ${filter === 'completed' ? css.active : ''}`}
         title='Завершенные заметки'
         onClick={showCompletedNotes}
       >Выполненные</Button>
       <Button
-        className={`${css.filterButton} ${isShowUnCompletedNotes === true ? css.active : ''}`}
+        className={`${css.filterButton} ${filter === 'active' ? css.active : ''}`}
         title='Незавершенные заметки'
         onClick={showUnCompletedNotes}
       >Активные</Button>

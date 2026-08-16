@@ -1,5 +1,4 @@
 import {
-  act,
   useCallback,
   useEffect,
   useMemo, useReducer,
@@ -50,9 +49,7 @@ const useNotes = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [disappearingNoteId, setDisappearingNoteId] = useState(null)
   const [appearingNoteId, setAppearingNoteId] = useState(null)
-  const [isShowAllNotes, setIsShowAllNotes] = useState(true)
-  const [isShowCompletedNotes, setIsShowCompletedNotes] = useState(false)
-  const [isShowUnCompletedNotes, setIsShowUnCompletedNotes] = useState(false)
+  const [filter, setFilter] = useState('all')
 
   const newNoteInputRef = useRef(null)
 
@@ -79,7 +76,7 @@ const useNotes = () => {
   const toggleNoteComplete = useCallback((noteId, isDone) => {
     notesAPI.toggleComplete(noteId, isDone)
       .then(() => {
-        if (!isShowAllNotes) {
+        if (filter !== 'all') {
           setDisappearingNoteId(noteId)
           setTimeout(() => {
             dispatch({type: 'TOGGLE_COMPLETE', id: noteId, isDone})
@@ -87,7 +84,7 @@ const useNotes = () => {
           }, 400)
         } else dispatch({type: 'TOGGLE_COMPLETE', id: noteId, isDone})
       })
-  }, [isShowAllNotes])
+  }, [filter])
 
   const addNote = useCallback((title, content) => {
     const newNote = {
@@ -118,39 +115,33 @@ const useNotes = () => {
     })
   }, []);
 
-  const actuallyNotes = useMemo(() => {
-    let filterNotes = null
-
-    if (isShowCompletedNotes) {
-      filterNotes = notes.filter(({isDone}) => isDone === true)
-    } else if (isShowUnCompletedNotes) {
-      filterNotes = notes.filter(({isDone}) => isDone === false)
+  const visibleNotes = useMemo(() => {
+    if (filter === 'completed') {
+      return notes.filter(({isDone}) => isDone)
+    } else if (filter === 'active') {
+      return notes.filter(({isDone}) => !isDone)
+    } else {
+      return notes
     }
-
-    return filterNotes === null ? notes : filterNotes
-  }, [notes, isShowCompletedNotes, isShowUnCompletedNotes])
+  }, [notes, filter])
 
   const filteredNotes = useMemo(() => {
     const clearSearchQuery = searchQuery.trim().toLowerCase()
 
-    let filterNotes = actuallyNotes
-
     return clearSearchQuery.length > 0
-      ? filterNotes.filter(({title, content}) =>
+      ? visibleNotes.filter(({title, content}) =>
         title.toLowerCase().includes(clearSearchQuery) ||
         content.toLowerCase().includes(clearSearchQuery)
       )
       : null
   }, [
-    notes,
+    visibleNotes,
     searchQuery,
-    isShowCompletedNotes,
-    isShowUnCompletedNotes
   ])
 
   return {
     notes,
-    actuallyNotes,
+    visibleNotes,
     filteredNotes,
     deleteNote,
     deleteAllNotes,
@@ -165,12 +156,8 @@ const useNotes = () => {
     addNote,
     disappearingNoteId,
     appearingNoteId,
-    isShowAllNotes,
-    isShowCompletedNotes,
-    isShowUnCompletedNotes,
-    setIsShowAllNotes,
-    setIsShowCompletedNotes,
-    setIsShowUnCompletedNotes,
+    filter,
+    setFilter,
   }
 }
 

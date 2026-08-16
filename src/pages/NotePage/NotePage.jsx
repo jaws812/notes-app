@@ -21,7 +21,7 @@ const NotePage = (props) => {
       .finally(() => {
         setIsLoading(false)
       })
-  }, []);
+  }, [noteId]);
 
   if (isLoading) {
     return <div>Загрузка...</div>

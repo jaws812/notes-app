@@ -11,8 +11,8 @@ import css from './Note.module.scss'
 const Note = () => {
 
   const {
+    firstIncompleteNoteId,
     firstIncompleteNoteRef,
-    isShowCompletedNotes,
   } = useContext(NotesContext)
 
   return (
@@ -27,7 +27,7 @@ const Note = () => {
       <NoteInfo
         css={css}
       />
-      {(!isShowCompletedNotes && (
+      {(firstIncompleteNoteId && (
         <Button
           onClick={
             () => firstIncompleteNoteRef.current?.scrollIntoView({behavior: 'smooth'})
