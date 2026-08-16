@@ -33,7 +33,7 @@ export const NotesProvider = (props) => {
   const {
     firstIncompleteNoteRef,
     firstIncompleteNoteId,
-  } = useIncompleteNoteScroll(visibleNotes)
+  } = useIncompleteNoteScroll(filteredNotes ?? visibleNotes)
 
   const value = useMemo(() => ({
     notes,
