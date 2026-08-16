@@ -8,31 +8,42 @@ const NoteList = (props) => {
 
   const {
     notes,
-    actuallyNotes,
+    visibleNotes,
     filteredNotes,
-    isShowCompletedNotes,
-    isShowUnCompletedNotes,
+    filter,
   } = useContext(NotesContext)
 
-  const hasNotes = actuallyNotes.length > 0
+  const hasNotes = notes.length > 0
   const isEmptyFilteredNotes = filteredNotes?.length === 0
 
   if (!hasNotes) {
     return (<div className={css.emptyMessage}>Заметок нет</div>)
   }
 
-  if (hasNotes && isEmptyFilteredNotes && isShowCompletedNotes) {
+  if (hasNotes && filter === 'active' && visibleNotes.length === 0) {
+    return (<div className={css.emptyMessage}>Активных заметок нет</div>)
+  }
+
+  if (hasNotes && filter === 'active' && visibleNotes.length > 0 && isEmptyFilteredNotes) {
+    return (<div className={css.emptyMessage}>Активных заметок не найдено</div>)
+  }
+
+  if (hasNotes && filter === 'completed' && visibleNotes.length === 0) {
+    return (<div className={css.emptyMessage}>Выполненных заметок нет</div>)
+  }
+
+  if (hasNotes && filter === 'completed' && visibleNotes.length > 0 && isEmptyFilteredNotes) {
     return (
-      <div className={css.emptyMessage}>Выполненные заметки не найдены</div>)
-  } else if (hasNotes && isEmptyFilteredNotes && isShowUnCompletedNotes) {
-    return (<div className={css.emptyMessage}>Активные заметки не найдены</div>)
-  } else if (hasNotes && isEmptyFilteredNotes) {
-    return (<div className={css.emptyMessage}>3аметки не найдены</div>)
+      <div className={css.emptyMessage}>Выполненных заметок не найдено</div>)
+  }
+
+  if (hasNotes && isEmptyFilteredNotes) {
+    return (<div className={css.emptyMessage}>Заметок не найдено</div>)
   }
 
   return (
     <ul className={css.list}>
-      {(filteredNotes ?? actuallyNotes).map((note) => (
+      {(filteredNotes ?? visibleNotes).map((note) => (
         <NoteItem
           key={note.id}
           {...note}
