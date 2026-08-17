@@ -28,6 +28,8 @@ export const NotesProvider = (props) => {
     appearingNoteId,
     filter,
     setFilter,
+    showNotification,
+    setShowNotification,
   } = useNotes()
 
   const {
@@ -54,6 +56,8 @@ export const NotesProvider = (props) => {
     appearingNoteId,
     filter,
     setFilter,
+    showNotification,
+    setShowNotification,
     firstIncompleteNoteRef,
     firstIncompleteNoteId,
   }), [
@@ -75,6 +79,8 @@ export const NotesProvider = (props) => {
     appearingNoteId,
     filter,
     setFilter,
+    showNotification,
+    setShowNotification,
     firstIncompleteNoteRef,
     firstIncompleteNoteId,
   ])

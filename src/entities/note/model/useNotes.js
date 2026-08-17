@@ -50,6 +50,7 @@ const useNotes = () => {
   const [disappearingNoteId, setDisappearingNoteId] = useState(null)
   const [appearingNoteId, setAppearingNoteId] = useState(null)
   const [filter, setFilter] = useState('all')
+  const [showNotification, setShowNotification] = useState('hide') // hide / show
 
   const newNoteInputRef = useRef(null)
 
@@ -100,12 +101,20 @@ const useNotes = () => {
         setNewNoteContent('')
         setSearchQuery('')
         newNoteInputRef.current.focus()
+        if (filter === 'completed') {
+          setShowNotification('show')
+        }
         setAppearingNoteId(addedNote.id)
         setTimeout(() => {
           setAppearingNoteId(null)
         }, 400)
+        if (filter === 'completed') {
+          setTimeout(() => {
+            setShowNotification('hide')
+          }, 4000)
+        }
       })
-  }, [])
+  }, [filter])
 
   useEffect(() => {
     newNoteInputRef.current.focus()
@@ -158,6 +167,8 @@ const useNotes = () => {
     appearingNoteId,
     filter,
     setFilter,
+    showNotification,
+    setShowNotification,
   }
 }
 
