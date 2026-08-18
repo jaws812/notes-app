@@ -9,10 +9,10 @@ const ShowNotification = () => {
   } = useContext(NotesContext)
 
   return (
-    <>
+    <div role="status">
       {showNotification === 'show' &&
-        <Notification onClick={() => setShowNotification('hide')} />}
-    </>
+        <Notification onClick={() => setShowNotification(null)} />}
+    </div>
   )
 }
 
