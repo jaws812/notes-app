@@ -110,9 +110,6 @@ const useNotes = () => {
           }, 4000)
         }
         setAppearingNoteId(addedNote.id)
-        setTimeout(() => {
-          setAppearingNoteId(null)
-        }, 400)
       })
   }, [filter])
 
@@ -123,6 +120,18 @@ const useNotes = () => {
       dispatch({type: 'SET_ALL', notes: serverNotes})
     })
   }, []);
+
+  useEffect(() => {
+    if (appearingNoteId === null) {
+      return
+    }
+
+    const appearTimer = setTimeout(() => {
+      setAppearingNoteId(null)
+    }, 400)
+
+    return () => clearTimeout(appearTimer)
+  }, [appearingNoteId]);
 
   useEffect(() => {
     return () => clearTimeout(notificationTimer.current)
