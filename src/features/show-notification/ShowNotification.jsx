@@ -5,13 +5,17 @@ import Notification from "@/shared/ui/Notification";
 const ShowNotification = () => {
   const {
     showNotification,
-    setShowNotification
+    hideNotification,
   } = useContext(NotesContext)
 
   return (
     <div role="status">
       {showNotification === 'show' &&
-        <Notification onClick={() => setShowNotification(null)} />}
+        <Notification
+          text="Новая заметка добавлена, но не отображется из-за
+        выбранного фильтра."
+          onClick={hideNotification}
+        />}
     </div>
   )
 }

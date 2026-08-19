@@ -6,6 +6,7 @@ import {
   useState,
 } from "react";
 import notesAPI from "@/shared/api/notes";
+import useNotification from "@/shared/utils/useNotification";
 
 // в state будет храниться наше состояние - массив заметок
 /* в action будет приходить объект у которого гарантированно будет свойство
@@ -50,10 +51,14 @@ const useNotes = () => {
   const [disappearingNoteId, setDisappearingNoteId] = useState(null)
   const [appearingNoteId, setAppearingNoteId] = useState(null)
   const [filter, setFilter] = useState('all')
-  const [showNotification, setShowNotification] = useState(null) // null / 'show'
 
   const newNoteInputRef = useRef(null)
-  const notificationTimer = useRef(null)
+
+  const {
+    hideNotification,
+    showNotificationBadge,
+    showNotification,
+  } = useNotification(4000)
 
   const deleteAllNotes = useCallback(() => {
     const isConfirm = confirm('Вы уверены, что хотите удалить все заметки?')
@@ -103,15 +108,11 @@ const useNotes = () => {
         setSearchQuery('')
         newNoteInputRef.current.focus()
         if (filter === 'completed') {
-          clearTimeout(notificationTimer.current)
-          setShowNotification('show')
-          notificationTimer.current = setTimeout(() => {
-            setShowNotification(null)
-          }, 4000)
+          showNotificationBadge()
         }
         setAppearingNoteId(addedNote.id)
       })
-  }, [filter])
+  }, [filter, showNotificationBadge])
 
   useEffect(() => {
     newNoteInputRef.current.focus()
@@ -132,10 +133,6 @@ const useNotes = () => {
 
     return () => clearTimeout(appearTimer)
   }, [appearingNoteId]);
-
-  useEffect(() => {
-    return () => clearTimeout(notificationTimer.current)
-  }, []);
 
   const visibleNotes = useMemo(() => {
     if (filter === 'completed') {
@@ -180,8 +177,9 @@ const useNotes = () => {
     appearingNoteId,
     filter,
     setFilter,
+    hideNotification,
+    showNotificationBadge,
     showNotification,
-    setShowNotification,
   }
 }
 

@@ -5,14 +5,16 @@ const Notification = (props) => {
 
   const {
     onClick,
+    text,
   } = props
 
   return (
     <div className={css.notification}>
-      <div className={css.text}>Новая заметка добавлена, но не отображется из-за
-        выбранного фильтра.
-      </div>
-      <Button className={css.button} onClick={onClick}>Закрыть</Button>
+      <div className={css.text}>{text}</div>
+      <Button
+        className={css.button}
+        onClick={onClick}
+      >Закрыть</Button>
     </div>
   )
 }
