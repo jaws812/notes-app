@@ -1,6 +1,6 @@
 import {NotesContext} from "@/entities/note";
 import {useContext} from "react";
-import Notification from "@/shared/ui/notification/Notification";
+import Notification from "@/shared/ui/Notification";
 
 const ShowNotification = () => {
   const {

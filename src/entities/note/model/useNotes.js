@@ -53,7 +53,7 @@ const useNotes = () => {
   const [showNotification, setShowNotification] = useState(null) // null / 'show'
 
   const newNoteInputRef = useRef(null)
-  const timer = useRef(null)
+  const timerNotification = useRef(null)
 
   const deleteAllNotes = useCallback(() => {
     const isConfirm = confirm('Вы уверены, что хотите удалить все заметки?')
@@ -103,26 +103,19 @@ const useNotes = () => {
         setSearchQuery('')
         newNoteInputRef.current.focus()
         if (filter === 'completed') {
+          clearTimeout(timerNotification.current)
           setShowNotification('show')
-          console.log("Уведомление отображается")
+          timerNotification.current = setTimeout(() => {
+            setShowNotification('hide')
+          }, 4000)
         }
         setAppearingNoteId(addedNote.id)
-        setTimeout(() => {
-          setAppearingNoteId(null)
-        }, 400)
+        // setTimeout(() => {
+        //   setAppearingNoteId(null)
+        // }, 400)
       })
   }, [filter])
 
-  useEffect(() => {
-    timer.current = setTimeout(() => {
-      console.log("Уведомление скрыто")
-      setShowNotification('hide')
-    }, 4000)
-
-    return () => {
-      clearTimeout(timer.current)
-    }
-  }, [showNotification]);
 
   useEffect(() => {
     newNoteInputRef.current.focus()
