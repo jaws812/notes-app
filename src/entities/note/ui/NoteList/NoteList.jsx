@@ -1,6 +1,12 @@
 import {memo, useContext} from 'react'
 import {NoteItem, NotesContext} from "@/entities/note";
 
+const filterLabels = {
+  all: 'Заметок',
+  active: 'Активных заметок',
+  completed: 'Выполненных заметок',
+}
+
 const NoteList = (props) => {
   const {
     css,
@@ -14,41 +20,25 @@ const NoteList = (props) => {
   } = useContext(NotesContext)
 
   const hasNotes = notes.length > 0
-  const isEmptyFilteredNotes = filteredNotes?.length === 0
   const isSearching = filteredNotes !== null
+  const notesToRender = isSearching ? filteredNotes : visibleNotes
 
   if (!hasNotes) {
     return (<div className={css.emptyMessage}>Заметок нет</div>)
   }
 
-  if (filter === 'active') {
+  if (notesToRender.length === 0) {
     if (visibleNotes.length === 0) {
-      return (<div className={css.emptyMessage}>Активных заметок нет</div>)
-    }
-
-    if (isEmptyFilteredNotes) {
+      return (<div className={css.emptyMessage}>{filterLabels[filter]} нет</div>)
+    } else {
       return (
-        <div className={css.emptyMessage}>Активных заметок не найдено</div>)
-    }
-  } else if (filter === 'completed') {
-    if (visibleNotes.length === 0) {
-      return (<div className={css.emptyMessage}>Выполненных заметок нет</div>)
-    }
-
-    if (isEmptyFilteredNotes) {
-      return (
-        <div className={css.emptyMessage}>Выполненных заметок не найдено</div>)
-    }
-  } else {
-    if (isEmptyFilteredNotes) {
-      return (<div className={css.emptyMessage}>Заметок не найдено</div>)
+        <div className={css.emptyMessage}>{filterLabels[filter]} не найдено</div>)
     }
   }
 
-
   return (
     <ul className={css.list}>
-      {(isSearching ? filteredNotes : visibleNotes).map((note) => (
+      {notesToRender.map((note) => (
         <NoteItem
           key={note.id}
           {...note}
