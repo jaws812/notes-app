@@ -1,0 +1,21 @@
+.radioGroup{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fieldset{
+  border: var(--border);
+  border-radius: var(--border-radius-md);
+  padding: 8px 10px;
+}
+
+.legend{
+  font-size: 16px;
+}
+
+.label{
+  font-size: 16px;
+  color: var(--color-gray-8);
+  font-weight: 600;
+}

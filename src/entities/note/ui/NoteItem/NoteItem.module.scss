@@ -63,6 +63,22 @@
   color: var(--color-gray-6);
 }
 
+.badge {
+  padding: 3px 10px;
+  background-color: var(--color-orange-1);
+  border: var(--border);
+  border-radius: var(--border-radius-md);
+  font-weight: 700;
+}
+
+.low {
+  background-color: var(--color-green-3);
+}
+
+.high {
+  background-color: var(--color-red-1);
+}
+
 .link {
   height: 100%;
   padding-block: 2px;

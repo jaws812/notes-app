@@ -12,6 +12,8 @@ import css from './Note.module.scss'
 const Note = () => {
 
   const {
+    sortOnPriority,
+    setSortOnPriority,
     firstIncompleteNoteId,
     firstIncompleteNoteRef,
   } = useContext(NotesContext)
@@ -37,6 +39,9 @@ const Note = () => {
             fullWidth
           >Перейти к первой невыполненной заметке</Button>
         )}
+        <Button onClick={() => setSortOnPriority(!sortOnPriority)}>
+          Сортировка по приоритету: {sortOnPriority ? 'включено' : 'выключено'}
+        </Button>
         <FilterNotes css={css} />
         <NoteList
           css={css}

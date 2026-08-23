@@ -13,6 +13,7 @@ export const NotesProvider = (props) => {
     notes,
     visibleNotes,
     filteredNotes,
+    notesToRender,
     deleteNote,
     deleteAllNotes,
     toggleNoteComplete,
@@ -31,17 +32,22 @@ export const NotesProvider = (props) => {
     hideNotification,
     showNotificationBadge,
     showNotification,
+    activePriority,
+    setActivePriority,
+    sortOnPriority,
+    setSortOnPriority,
   } = useNotes()
 
   const {
     firstIncompleteNoteRef,
     firstIncompleteNoteId,
-  } = useIncompleteNoteScroll(filteredNotes ?? visibleNotes)
+  } = useIncompleteNoteScroll(notesToRender)
 
   const value = useMemo(() => ({
     notes,
     visibleNotes,
     filteredNotes,
+    notesToRender,
     deleteNote,
     deleteAllNotes,
     toggleNoteComplete,
@@ -60,12 +66,17 @@ export const NotesProvider = (props) => {
     hideNotification,
     showNotificationBadge,
     showNotification,
+    activePriority,
+    setActivePriority,
+    sortOnPriority,
+    setSortOnPriority,
     firstIncompleteNoteRef,
     firstIncompleteNoteId,
   }), [
     notes,
     visibleNotes,
     filteredNotes,
+    notesToRender,
     deleteNote,
     deleteAllNotes,
     toggleNoteComplete,
@@ -84,6 +95,10 @@ export const NotesProvider = (props) => {
     hideNotification,
     showNotificationBadge,
     showNotification,
+    activePriority,
+    setActivePriority,
+    sortOnPriority,
+    setSortOnPriority,
     firstIncompleteNoteRef,
     firstIncompleteNoteId,
   ])

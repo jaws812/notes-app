@@ -8,6 +8,12 @@ import {
 import notesAPI from "@/shared/api/notes";
 import useNotification from "@/shared/utils/useNotification";
 
+const valuePriority = {
+  low: 0,
+  normal: 1,
+  high: 2,
+}
+
 // в state будет храниться наше состояние - массив заметок
 /* в action будет приходить объект у которого гарантированно будет свойство
 type и опционально дополнительные данные*/
@@ -51,6 +57,8 @@ const useNotes = () => {
   const [disappearingNoteId, setDisappearingNoteId] = useState(null)
   const [appearingNoteId, setAppearingNoteId] = useState(null)
   const [filter, setFilter] = useState('all')
+  const [activePriority, setActivePriority] = useState('normal')
+  const [sortOnPriority, setSortOnPriority] = useState(false)
 
   const newNoteInputRef = useRef(null)
 
@@ -93,10 +101,11 @@ const useNotes = () => {
       })
   }, [filter])
 
-  const addNote = useCallback((title, content) => {
+  const addNote = useCallback((title, content, priority) => {
     const newNote = {
       title,
       content,
+      priority,
       isDone: false,
     }
 
@@ -105,6 +114,7 @@ const useNotes = () => {
         dispatch({type: 'ADD', note: addedNote})
         setNewNoteTitle('')
         setNewNoteContent('')
+        setActivePriority('normal')
         setSearchQuery('')
         newNoteInputRef.current.focus()
         if (filter === 'completed') {
@@ -118,7 +128,14 @@ const useNotes = () => {
     newNoteInputRef.current.focus()
 
     notesAPI.getAll().then((serverNotes) => {
-      dispatch({type: 'SET_ALL', notes: serverNotes})
+      dispatch({
+        type: 'SET_ALL',
+        notes: serverNotes.map((note) => {
+          if (!note.priority) {
+            return ({...note, priority: 'normal'})
+          } else return note
+        })
+      })
     })
   }, []);
 
@@ -158,10 +175,19 @@ const useNotes = () => {
     searchQuery,
   ])
 
+  const isSearching = filteredNotes !== null
+  const notesToRender =
+    (!sortOnPriority
+      ? (isSearching ? filteredNotes : visibleNotes)
+      : [...(isSearching ? filteredNotes : visibleNotes)].sort((a, b) =>
+        valuePriority[b.priority] - valuePriority[a.priority]
+      ))
+
   return {
     notes,
     visibleNotes,
     filteredNotes,
+    notesToRender,
     deleteNote,
     deleteAllNotes,
     toggleNoteComplete,
@@ -180,6 +206,10 @@ const useNotes = () => {
     hideNotification,
     showNotificationBadge,
     showNotification,
+    activePriority,
+    setActivePriority,
+    sortOnPriority,
+    setSortOnPriority,
   }
 }
 

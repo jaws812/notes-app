@@ -4,12 +4,19 @@ import RouterLink from "@/shared/ui/RouterLink";
 import {highlightCaseInsensitive} from "@/shared/utils/highlight";
 import css from './NoteItem.module.scss'
 
+const priorityLabels = {
+  low: 'Низкий',
+  normal: 'Нормальный',
+  high: 'Высокий',
+}
+
 const NoteItem = (props) => {
   const {
     id,
     title,
     content,
     isDone,
+    priority,
   } = props
 
   const {
@@ -53,6 +60,11 @@ const NoteItem = (props) => {
         <div className={css.content}>{content}</div>
       </div>
       <div className={css.actions}>
+        <div
+          className={`${css.badge} ${css[priority]}`}
+        >
+          {priorityLabels[priority]}
+        </div>
         <RouterLink
           className={css.link}
           to={`/notes/${id}`}

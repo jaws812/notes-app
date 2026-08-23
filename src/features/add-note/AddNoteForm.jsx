@@ -2,6 +2,13 @@ import {useContext, useState} from "react";
 import {NotesContext} from "@/entities/note";
 import Field from "@/shared/ui/Field";
 import Button from "@/shared/ui/Button";
+import RadioGroup from "@/shared/ui/RadioGroup";
+
+const priorityVariables = [
+  {value: 'low', text: 'Низкий'},
+  {value: 'normal', text: 'Нормальный'},
+  {value: 'high', text: 'Высокий'},
+]
 
 const AddNoteForm = (props) => {
   const {
@@ -15,6 +22,8 @@ const AddNoteForm = (props) => {
     newNoteContent,
     setNewNoteContent,
     newNoteInputRef,
+    activePriority,
+    setActivePriority,
   } = useContext(NotesContext)
 
   const [errorTitle, setErrorTitle] = useState('')
@@ -28,7 +37,7 @@ const AddNoteForm = (props) => {
   const onSubmit = (event) => {
     event.preventDefault()
     if (!isNewNoteTitleEmpty && !isNewNoteContentEmpty) {
-      addNote(clearNewNoteTitle, clearNewNoteContent)
+      addNote(clearNewNoteTitle, clearNewNoteContent, activePriority)
     }
   }
 
@@ -45,7 +54,6 @@ const AddNoteForm = (props) => {
       setErrorContent(hasOnlySpaces ? 'Контент заметки не может быть пустым' : '')
     }
   }
-
 
   return (
     <form
@@ -73,6 +81,12 @@ const AddNoteForm = (props) => {
         value={newNoteContent}
         error={errorContent}
         onInput={onInput}
+      />
+      <RadioGroup
+        name="priority"
+        priorityVariables={priorityVariables}
+        activePriority={activePriority}
+        setActivePriority={setActivePriority}
       />
       <Button
         className="note__button"

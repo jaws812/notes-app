@@ -15,13 +15,11 @@ const NoteList = (props) => {
   const {
     notes,
     visibleNotes,
-    filteredNotes,
+    notesToRender,
     filter,
   } = useContext(NotesContext)
 
   const hasNotes = notes.length > 0
-  const isSearching = filteredNotes !== null
-  const notesToRender = isSearching ? filteredNotes : visibleNotes
 
   if (!hasNotes) {
     return (<div className={css.emptyMessage}>Заметок нет</div>)
@@ -29,7 +27,8 @@ const NoteList = (props) => {
 
   if (notesToRender.length === 0) {
     if (visibleNotes.length === 0) {
-      return (<div className={css.emptyMessage}>{filterLabels[filter]} нет</div>)
+      return (
+        <div className={css.emptyMessage}>{filterLabels[filter]} нет</div>)
     } else {
       return (
         <div className={css.emptyMessage}>{filterLabels[filter]} не найдено</div>)
