@@ -1,4 +1,4 @@
-import {useContext, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import {NotesContext} from "@/entities/note";
 import Field from "@/shared/ui/Field";
 import Button from "@/shared/ui/Button";
@@ -15,18 +15,18 @@ const AddNoteForm = (props) => {
     css,
   } = props
 
-  const [newNoteTitle, setNewNoteTitle] = useState('')
-  const [newNoteContent, setNewNoteContent] = useState('')
-
   const {
     addNote,
-    newNoteInputRef,
-    activePriority,
-    setActivePriority,
   } = useContext(NotesContext)
 
+  const [newNoteTitle, setNewNoteTitle] = useState('')
+  const [newNoteContent, setNewNoteContent] = useState('')
+  const [activePriority, setActivePriority] = useState('normal')
   const [errorTitle, setErrorTitle] = useState('')
   const [errorContent, setErrorContent] = useState('')
+
+  const newNoteInputRef = useRef(null)
+
 
   const clearNewNoteTitle = newNoteTitle.trim()
   const isNewNoteTitleEmpty = clearNewNoteTitle.length === 0
@@ -43,6 +43,8 @@ const AddNoteForm = (props) => {
         () => {
           setNewNoteTitle('')
           setNewNoteContent('')
+          setActivePriority('normal')
+          newNoteInputRef.current.focus()
         })
     }
   }
@@ -60,6 +62,10 @@ const AddNoteForm = (props) => {
       setErrorContent(hasOnlySpaces ? 'Контент заметки не может быть пустым' : '')
     }
   }
+
+  useEffect(() => {
+    newNoteInputRef.current.focus()
+  }, []);
 
   return (
     <form

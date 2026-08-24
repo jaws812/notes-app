@@ -2,7 +2,6 @@ import {
   useCallback,
   useEffect,
   useMemo, useReducer,
-  useRef,
   useState,
 } from "react";
 import notesAPI from "@/shared/api/notes";
@@ -55,10 +54,8 @@ const useNotes = () => {
   const [disappearingNoteId, setDisappearingNoteId] = useState(null)
   const [appearingNoteId, setAppearingNoteId] = useState(null)
   const [filter, setFilter] = useState('all')
-  const [activePriority, setActivePriority] = useState('normal')
   const [sortOnPriority, setSortOnPriority] = useState(false)
 
-  const newNoteInputRef = useRef(null)
 
   const {
     hideNotification,
@@ -111,9 +108,7 @@ const useNotes = () => {
       .then((addedNote) => {
         dispatch({type: 'ADD', note: addedNote})
         callbackAfterAdding()
-        setActivePriority('normal')
         setSearchQuery('')
-        newNoteInputRef.current.focus()
         if (filter === 'completed') {
           showNotificationBadge()
         }
@@ -122,8 +117,6 @@ const useNotes = () => {
   }, [filter, showNotificationBadge])
 
   useEffect(() => {
-    newNoteInputRef.current.focus()
-
     notesAPI.getAll().then((serverNotes) => {
       dispatch({
         type: 'SET_ALL',
@@ -191,7 +184,6 @@ const useNotes = () => {
     deleteNote,
     deleteAllNotes,
     toggleNoteComplete,
-    newNoteInputRef,
     searchQuery,
     setSearchQuery,
     addNote,
@@ -202,8 +194,6 @@ const useNotes = () => {
     hideNotification,
     showNotificationBadge,
     showNotification,
-    activePriority,
-    setActivePriority,
     sortOnPriority,
     setSortOnPriority,
   }
