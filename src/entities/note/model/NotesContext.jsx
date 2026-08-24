@@ -12,7 +12,6 @@ export const NotesProvider = (props) => {
   const {
     notes,
     visibleNotes,
-    filteredNotes,
     notesToRender,
     deleteNote,
     deleteAllNotes,
@@ -46,7 +45,6 @@ export const NotesProvider = (props) => {
   const value = useMemo(() => ({
     notes,
     visibleNotes,
-    filteredNotes,
     notesToRender,
     deleteNote,
     deleteAllNotes,
@@ -75,7 +73,6 @@ export const NotesProvider = (props) => {
   }), [
     notes,
     visibleNotes,
-    filteredNotes,
     notesToRender,
     deleteNote,
     deleteAllNotes,

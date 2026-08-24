@@ -84,9 +84,10 @@ const AddNoteForm = (props) => {
       />
       <RadioGroup
         name="priority"
-        priorityVariables={priorityVariables}
-        activePriority={activePriority}
-        setActivePriority={setActivePriority}
+        legend="Выберите приоритет заметки:"
+        options={priorityVariables}
+        valueActive={activePriority}
+        onChange={(event) => setActivePriority(event.target.value)}
       />
       <Button
         className="note__button"

@@ -4,30 +4,27 @@ const RadioGroup = (props) => {
 
   const {
     name,
-    priorityVariables,
-    activePriority,
-    setActivePriority,
+    legend,
+    options,
+    valueActive,
+    onChange,
   } = props
-
-  const onChange = (event) => {
-    setActivePriority(event.target.value)
-  }
 
   return (
     <fieldset className={css.fieldset}>
       <legend className={css.legend}>
-        Выберите приоритет заметки:
+        {legend}
       </legend>
       <div className={css.radioGroup}>
-        {priorityVariables.map(({value, text}, index) => {
+        {options.map(({value, text}) => {
           return (
-            <div key={index}>
+            <div key={value}>
               <input
                 type="radio"
                 id={value}
                 name={name}
                 value={value}
-                checked={activePriority === value}
+                checked={valueActive === value}
                 onChange={onChange}
               />
               <label

@@ -133,7 +133,9 @@ const useNotes = () => {
         notes: serverNotes.map((note) => {
           if (!note.priority) {
             return ({...note, priority: 'normal'})
-          } else return note
+          } else {
+            return note
+          }
         })
       })
     })
@@ -176,17 +178,18 @@ const useNotes = () => {
   ])
 
   const isSearching = filteredNotes !== null
-  const notesToRender =
-    (!sortOnPriority
-      ? (isSearching ? filteredNotes : visibleNotes)
-      : [...(isSearching ? filteredNotes : visibleNotes)].sort((a, b) =>
+  const notesToRender = useMemo(() => {
+    const notesList = isSearching ? filteredNotes : visibleNotes
+    return sortOnPriority
+      ? [...notesList].sort((a, b) =>
         valuePriority[b.priority] - valuePriority[a.priority]
-      ))
+      )
+      : notesList
+  }, [isSearching, visibleNotes, filteredNotes, sortOnPriority])
 
   return {
     notes,
     visibleNotes,
-    filteredNotes,
     notesToRender,
     deleteNote,
     deleteAllNotes,
