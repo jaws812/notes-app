@@ -51,8 +51,6 @@ const notesReducer = (state, action) => {
 
 const useNotes = () => {
   const [notes, dispatch] = useReducer(notesReducer, [])
-  const [newNoteTitle, setNewNoteTitle] = useState('')
-  const [newNoteContent, setNewNoteContent] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
   const [disappearingNoteId, setDisappearingNoteId] = useState(null)
   const [appearingNoteId, setAppearingNoteId] = useState(null)
@@ -101,7 +99,7 @@ const useNotes = () => {
       })
   }, [filter])
 
-  const addNote = useCallback((title, content, priority) => {
+  const addNote = useCallback((title, content, priority, callbackAfterAdding) => {
     const newNote = {
       title,
       content,
@@ -112,8 +110,7 @@ const useNotes = () => {
     notesAPI.add(newNote)
       .then((addedNote) => {
         dispatch({type: 'ADD', note: addedNote})
-        setNewNoteTitle('')
-        setNewNoteContent('')
+        callbackAfterAdding()
         setActivePriority('normal')
         setSearchQuery('')
         newNoteInputRef.current.focus()
@@ -194,10 +191,6 @@ const useNotes = () => {
     deleteNote,
     deleteAllNotes,
     toggleNoteComplete,
-    newNoteTitle,
-    setNewNoteTitle,
-    newNoteContent,
-    setNewNoteContent,
     newNoteInputRef,
     searchQuery,
     setSearchQuery,

@@ -15,12 +15,11 @@ const AddNoteForm = (props) => {
     css,
   } = props
 
+  const [newNoteTitle, setNewNoteTitle] = useState('')
+  const [newNoteContent, setNewNoteContent] = useState('')
+
   const {
     addNote,
-    newNoteTitle,
-    setNewNoteTitle,
-    newNoteContent,
-    setNewNoteContent,
     newNoteInputRef,
     activePriority,
     setActivePriority,
@@ -37,7 +36,14 @@ const AddNoteForm = (props) => {
   const onSubmit = (event) => {
     event.preventDefault()
     if (!isNewNoteTitleEmpty && !isNewNoteContentEmpty) {
-      addNote(clearNewNoteTitle, clearNewNoteContent, activePriority)
+      addNote(
+        clearNewNoteTitle,
+        clearNewNoteContent,
+        activePriority,
+        () => {
+          setNewNoteTitle('')
+          setNewNoteContent('')
+        })
     }
   }
 
