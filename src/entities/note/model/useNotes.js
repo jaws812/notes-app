@@ -67,10 +67,12 @@ const useNotes = () => {
     const isConfirm = confirm('Вы уверены, что хотите удалить все заметки?')
 
     if (isConfirm) {
-      notesAPI.deleteAll(notes)
-        .then(() => dispatch({type: 'DELETE_ALL'}))
+      notesAPI.getAll().then((notes) => {
+        notesAPI.deleteAll(notes)
+          .then(() => dispatch({type: 'DELETE_ALL'}))
+      })
     }
-  }, [notes])
+  }, [])
 
   const deleteNote = useCallback((noteId) => {
     notesAPI.delete(noteId)
