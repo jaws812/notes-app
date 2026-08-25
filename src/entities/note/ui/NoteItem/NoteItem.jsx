@@ -1,5 +1,5 @@
 import {memo, useContext} from 'react'
-import {NotesContext} from "@/entities/note";
+import {NotesActionsContext, NotesDataContext} from "@/entities/note";
 import RouterLink from "@/shared/ui/RouterLink";
 import {highlightCaseInsensitive} from "@/shared/utils/highlight";
 import css from './NoteItem.module.scss'
@@ -21,13 +21,16 @@ const NoteItem = (props) => {
 
   const {
     firstIncompleteNoteRef,
-    firstIncompleteNoteId,
     deleteNote,
     toggleNoteComplete,
+  } = useContext(NotesActionsContext)
+
+  const {
+    firstIncompleteNoteId,
     disappearingNoteId,
     appearingNoteId,
     searchQuery,
-  } = useContext(NotesContext)
+  } = useContext(NotesDataContext)
 
   const highlightedTitle = highlightCaseInsensitive(title, searchQuery)
 

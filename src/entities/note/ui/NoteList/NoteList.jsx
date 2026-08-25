@@ -1,5 +1,5 @@
 import {memo, useContext} from 'react'
-import {NoteItem, NotesContext} from "@/entities/note";
+import {NoteItem, NotesDataContext} from "@/entities/note";
 
 const filterLabels = {
   all: 'Заметок',
@@ -17,7 +17,7 @@ const NoteList = (props) => {
     visibleNotes,
     notesToRender,
     filter,
-  } = useContext(NotesContext)
+  } = useContext(NotesDataContext)
 
   const hasNotes = notes.length > 0
 

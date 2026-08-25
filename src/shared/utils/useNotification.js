@@ -1,18 +1,18 @@
 import {useCallback, useEffect, useRef, useState} from "react";
 
 const useNotification = (time = 4000) => {
-  const [showNotification, setShowNotification] = useState(null) // null / 'show'
+  const [notificationType, setNotificationType] = useState(null) // null / 'show-add'
   const notificationTimer = useRef(null)
 
   const hideNotification = useCallback(() => {
-    setShowNotification(null)
+    setNotificationType(null)
   }, [])
 
-  const showNotificationBadge = useCallback(() => {
+  const showNotification = useCallback(() => {
     clearTimeout(notificationTimer.current)
-    setShowNotification('show')
+    setNotificationType('show-add')
     notificationTimer.current = setTimeout(() => {
-      setShowNotification(null)
+      setNotificationType(null)
     }, time)
   }, [time])
 
@@ -22,8 +22,8 @@ const useNotification = (time = 4000) => {
 
   return {
     hideNotification,
-    showNotificationBadge,
     showNotification,
+    notificationType,
   }
 }
 

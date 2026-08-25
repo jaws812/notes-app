@@ -1,16 +1,19 @@
-import {NotesContext} from "@/entities/note";
+import {NotesActionsContext, NotesDataContext} from "@/entities/note";
 import {useContext} from "react";
 import Notification from "@/shared/ui/Notification";
 
 const ShowNotification = () => {
   const {
-    showNotification,
     hideNotification,
-  } = useContext(NotesContext)
+  } = useContext(NotesActionsContext)
+
+  const {
+    notificationType,
+  } = useContext(NotesDataContext)
 
   return (
     <div role="status">
-      {showNotification === 'show' &&
+      {notificationType === 'show-add' &&
         <Notification
           text="Новая заметка добавлена, но не отображется из-за
         выбранного фильтра."

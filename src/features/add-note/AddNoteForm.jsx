@@ -1,5 +1,5 @@
 import {useContext, useEffect, useRef, useState} from "react";
-import {NotesContext} from "@/entities/note";
+import {NotesActionsContext} from "@/entities/note";
 import Field from "@/shared/ui/Field";
 import Button from "@/shared/ui/Button";
 import RadioGroup from "@/shared/ui/RadioGroup";
@@ -17,7 +17,7 @@ const AddNoteForm = (props) => {
 
   const {
     addNote,
-  } = useContext(NotesContext)
+  } = useContext(NotesActionsContext)
 
   const [newNoteTitle, setNewNoteTitle] = useState('')
   const [newNoteContent, setNewNoteContent] = useState('')

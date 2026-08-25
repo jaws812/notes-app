@@ -4,19 +4,21 @@ import SearchNoteFrom from "@/features/search-notes";
 import FilterNotes from "@/features/filter-notes";
 import ShowNotification from "@/features/show-notification";
 import NoteInfo from "@/features/stats";
-import {NoteList} from "@/entities/note";
-import {NotesContext} from "@/entities/note";
+import {NoteList, NotesActionsContext, NotesDataContext} from "@/entities/note";
 import Button from "@/shared/ui/Button";
 import css from './Note.module.scss'
 
 const Note = () => {
 
   const {
-    sortOnPriority,
     setSortOnPriority,
-    firstIncompleteNoteId,
     firstIncompleteNoteRef,
-  } = useContext(NotesContext)
+  } = useContext(NotesActionsContext)
+
+  const {
+    sortOnPriority,
+    firstIncompleteNoteId,
+  } = useContext(NotesDataContext)
 
   return (
     <>

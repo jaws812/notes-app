@@ -1,5 +1,5 @@
 import {memo, useContext, useMemo} from 'react'
-import {NotesContext} from "@/entities/note";
+import {NotesActionsContext, NotesDataContext} from "@/entities/note";
 import Button from "@/shared/ui/Button";
 
 const NoteInfo = (props) => {
@@ -8,9 +8,12 @@ const NoteInfo = (props) => {
   } = props
 
   const {
-    notes,
     deleteAllNotes,
-  } = useContext(NotesContext)
+  } = useContext(NotesActionsContext)
+
+  const {
+    notes,
+  } = useContext(NotesDataContext)
 
   const total = notes.length
   const hasNotes = total > 0

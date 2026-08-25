@@ -2,7 +2,8 @@ import {createContext, useMemo} from "react"
 import useNotes from "./useNotes";
 import useIncompleteNoteScroll from "./useIncompleteNoteScroll";
 
-export const NotesContext = createContext({})
+export const NotesActionsContext = createContext({})
+export const NotesDataContext = createContext({})
 
 export const NotesProvider = (props) => {
   const {
@@ -24,8 +25,8 @@ export const NotesProvider = (props) => {
     filter,
     setFilter,
     hideNotification,
-    showNotificationBadge,
     showNotification,
+    notificationType,
     sortOnPriority,
     setSortOnPriority,
   } = useNotes()
@@ -35,53 +36,59 @@ export const NotesProvider = (props) => {
     firstIncompleteNoteId,
   } = useIncompleteNoteScroll(notesToRender)
 
-  const value = useMemo(() => ({
-    notes,
-    visibleNotes,
-    notesToRender,
+  const actions = useMemo(() => ({
     deleteNote,
     deleteAllNotes,
     toggleNoteComplete,
-    searchQuery,
     setSearchQuery,
     addNote,
+    setFilter,
+    hideNotification,
+    showNotification,
+    setSortOnPriority,
+    firstIncompleteNoteRef,
+  }), [
+    deleteNote,
+    deleteAllNotes,
+    toggleNoteComplete,
+    setSearchQuery,
+    addNote,
+    setFilter,
+    hideNotification,
+    showNotification,
+    setSortOnPriority,
+    firstIncompleteNoteRef,
+  ])
+
+  const data = useMemo(() => ({
+    notes,
+    visibleNotes,
+    notesToRender,
+    searchQuery,
     disappearingNoteId,
     appearingNoteId,
     filter,
-    setFilter,
-    hideNotification,
-    showNotificationBadge,
-    showNotification,
+    notificationType,
     sortOnPriority,
-    setSortOnPriority,
-    firstIncompleteNoteRef,
     firstIncompleteNoteId,
   }), [
     notes,
     visibleNotes,
     notesToRender,
-    deleteNote,
-    deleteAllNotes,
-    toggleNoteComplete,
     searchQuery,
-    setSearchQuery,
-    addNote,
     disappearingNoteId,
     appearingNoteId,
     filter,
-    setFilter,
-    hideNotification,
-    showNotificationBadge,
-    showNotification,
+    notificationType,
     sortOnPriority,
-    setSortOnPriority,
-    firstIncompleteNoteRef,
     firstIncompleteNoteId,
   ])
 
   return (
-    <NotesContext.Provider value={value}>
-      {children}
-    </NotesContext.Provider>
+    <NotesActionsContext.Provider value={actions}>
+      <NotesDataContext.Provider value={data}>
+        {children}
+      </NotesDataContext.Provider>
+    </NotesActionsContext.Provider>
   )
 }

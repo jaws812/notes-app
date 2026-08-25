@@ -59,8 +59,8 @@ const useNotes = () => {
 
   const {
     hideNotification,
-    showNotificationBadge,
     showNotification,
+    notificationType,
   } = useNotification(4000)
 
   const deleteAllNotes = useCallback(() => {
@@ -112,11 +112,11 @@ const useNotes = () => {
         callbackAfterAdding()
         setSearchQuery('')
         if (filter === 'completed') {
-          showNotificationBadge()
+          showNotification()
         }
         setAppearingNoteId(addedNote.id)
       })
-  }, [filter, showNotificationBadge])
+  }, [filter, showNotification])
 
   useEffect(() => {
     notesAPI.getAll().then((serverNotes) => {
@@ -194,8 +194,8 @@ const useNotes = () => {
     filter,
     setFilter,
     hideNotification,
-    showNotificationBadge,
     showNotification,
+    notificationType,
     sortOnPriority,
     setSortOnPriority,
   }

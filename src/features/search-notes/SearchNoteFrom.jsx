@@ -1,6 +1,6 @@
 import Field from "@/shared/ui/Field";
 import {useContext} from "react";
-import {NotesContext} from "@/entities/note";
+import {NotesActionsContext, NotesDataContext} from "@/entities/note";
 
 const SearchNoteFrom = (props) => {
   const {
@@ -8,9 +8,12 @@ const SearchNoteFrom = (props) => {
   } = props
 
   const {
-    searchQuery,
     setSearchQuery,
-  } = useContext(NotesContext)
+  } = useContext(NotesActionsContext)
+
+  const {
+    searchQuery,
+  } = useContext(NotesDataContext)
 
   return (
     <form
