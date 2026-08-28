@@ -2,8 +2,8 @@ import {createContext, useMemo} from "react"
 import useNotes from "./useNotes";
 import useIncompleteNoteScroll from "./useIncompleteNoteScroll";
 
-export const NotesActionsContext = createContext({})
-export const NotesDataContext = createContext({})
+export const NotesActionsContext = createContext(undefined)
+export const NotesDataContext = createContext(undefined)
 
 export const NotesProvider = (props) => {
   const {
@@ -29,6 +29,8 @@ export const NotesProvider = (props) => {
     notificationType,
     sortOnPriority,
     setSortOnPriority,
+    loadError,
+    isLoading,
   } = useNotes()
 
   const {
@@ -71,6 +73,8 @@ export const NotesProvider = (props) => {
     notificationType,
     sortOnPriority,
     firstIncompleteNoteId,
+    loadError,
+    isLoading,
   }), [
     notes,
     visibleNotes,
@@ -82,6 +86,8 @@ export const NotesProvider = (props) => {
     notificationType,
     sortOnPriority,
     firstIncompleteNoteId,
+    loadError,
+    isLoading,
   ])
 
   return (

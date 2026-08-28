@@ -18,7 +18,17 @@ const Note = () => {
   const {
     sortOnPriority,
     firstIncompleteNoteId,
+    loadError,
+    isLoading,
   } = useContext(NotesDataContext)
+
+  if(isLoading){
+    return (<div>Идет загрузка страницы...</div>)
+  }
+
+  if (loadError) {
+    return (<div>Данных о заметках нет, проблемы с сервером</div>)
+  }
 
   return (
     <>

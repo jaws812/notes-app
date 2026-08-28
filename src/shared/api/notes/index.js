@@ -6,30 +6,46 @@ const headers = {
 
 const notesAPI = {
   getAll: () => {
-    return fetch(URL).then((response) => response.json())
+    return fetch(URL)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Не удалось получить весь список заметок, проблемы с сервером")
+        }
+        return response.json()
+      })
   },
 
   getById: (id) => {
     return fetch(`${URL}/${id}`)
       .then((response) => {
         if (!response.ok) {
-          throw new Error('Не найдено!')
+          throw new Error("Заметка не найдена, проблемы с сервером")
         }
         return response.json()
       })
   },
 
-  add: (task) => {
+  add: (note) => {
     return fetch(URL, {
       method: 'POST',
       headers,
-      body: JSON.stringify(task)
+      body: JSON.stringify(note)
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Добавить заметку не удалось, проблемы с сервером")
+        }
+        return response.json()
+      })
   },
 
   delete: (id) => {
     return fetch(`${URL}/${id}`, {method: 'DELETE'})
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Не удалось удалить задачу, проблемы с сервером")
+        }
+      })
   },
 
   deleteAll: (notes) => {
@@ -44,6 +60,11 @@ const notesAPI = {
       headers,
       body: JSON.stringify({isDone})
     })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Не удалось переключить состояние заметки, проблемы с сервером")
+        }
+      })
   },
 }
 

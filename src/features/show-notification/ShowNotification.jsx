@@ -2,6 +2,14 @@ import {NotesActionsContext, NotesDataContext} from "@/entities/note";
 import {useContext} from "react";
 import Notification from "@/shared/ui/Notification";
 
+const textMessages = {
+  'show-add': 'Новая заметка добавлена, но не отображется из-за выбранного фильтра.',
+  'add-error': 'Добавить заметку не удалось, проблемы с сервером.',
+  'delete-error': 'Не удалось удалить задачу, проблемы с сервером.',
+  'toggle-error': 'Не удалось переключить состояние заметки, проблемы с сервером.',
+  'delete-all-error': 'Не удалось удалить все заметки, проблемы с сервером.',
+}
+
 const ShowNotification = () => {
   const {
     hideNotification,
@@ -13,10 +21,10 @@ const ShowNotification = () => {
 
   return (
     <div role="status">
-      {notificationType === 'show-add' &&
+      {notificationType !== null &&
         <Notification
-          text="Новая заметка добавлена, но не отображется из-за
-        выбранного фильтра."
+          text={textMessages[notificationType]}
+          isErrorMessage={notificationType !== "show-add"}
           onClick={hideNotification}
         />}
     </div>

@@ -14,6 +14,10 @@
   transition-duration: var(--transition-duration);
 }
 
+.notificationError{
+  background-color: var(--color-red-1);
+}
+
 .text {
   color: var(--color-gray-8);
   font-weight: 700;
@@ -21,4 +25,9 @@
 
 .button {
   padding: 5px 10px;
+}
+
+.buttonError{
+  background-color: var(--color-gray-4);
+  color: var(--color-gray-8);
 }

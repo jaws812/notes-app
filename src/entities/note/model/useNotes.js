@@ -55,7 +55,8 @@ const useNotes = () => {
   const [appearingNoteId, setAppearingNoteId] = useState(null)
   const [filter, setFilter] = useState('all')
   const [sortOnPriority, setSortOnPriority] = useState(false)
-
+  const [loadError, setLoadError] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   const {
     hideNotification,
@@ -67,10 +68,14 @@ const useNotes = () => {
     const isConfirm = confirm('Вы уверены, что хотите удалить все заметки?')
 
     if (isConfirm) {
-      notesAPI.getAll().then((notes) => {
-        notesAPI.deleteAll(notes)
-          .then(() => dispatch({type: 'DELETE_ALL'}))
-      })
+      notesAPI.getAll()
+        .then((notes) => {
+          return notesAPI.deleteAll(notes)
+        })
+        .then(() => dispatch({type: 'DELETE_ALL'}))
+        .catch(() => {
+          showNotification('delete-all-error')
+        })
     }
   }, [])
 
@@ -82,6 +87,9 @@ const useNotes = () => {
           dispatch({type: 'DELETE', id: noteId})
           setDisappearingNoteId(null)
         }, 400)
+      })
+      .catch(() => {
+        showNotification('delete-error')
       })
   }, [])
 
@@ -95,6 +103,9 @@ const useNotes = () => {
             setDisappearingNoteId(null)
           }, 400)
         } else dispatch({type: 'TOGGLE_COMPLETE', id: noteId, isDone})
+      })
+      .catch(() => {
+        showNotification('toggle-error')
       })
   }, [filter])
 
@@ -112,11 +123,14 @@ const useNotes = () => {
         callbackAfterAdding()
         setSearchQuery('')
         if (filter === 'completed') {
-          showNotification()
+          showNotification('show-add')
         }
         setAppearingNoteId(addedNote.id)
       })
-  }, [filter, showNotification])
+      .catch(() => {
+        showNotification('add-error')
+      })
+  }, [filter])
 
   useEffect(() => {
     notesAPI.getAll().then((serverNotes) => {
@@ -131,6 +145,12 @@ const useNotes = () => {
         })
       })
     })
+      .catch(() => {
+        setLoadError(true)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }, []);
 
   useEffect(() => {
@@ -198,6 +218,8 @@ const useNotes = () => {
     notificationType,
     sortOnPriority,
     setSortOnPriority,
+    loadError,
+    isLoading,
   }
 }
 

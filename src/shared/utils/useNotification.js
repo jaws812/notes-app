@@ -1,16 +1,17 @@
 import {useCallback, useEffect, useRef, useState} from "react";
 
 const useNotification = (time = 4000) => {
-  const [notificationType, setNotificationType] = useState(null) // null / 'show-add'
+  // type: null / 'show-add' / 'add-error' / 'get-all-error' / 'delete-error' / 'toggle-error' / 'delete-all-error'
+  const [notificationType, setNotificationType] = useState(null)
   const notificationTimer = useRef(null)
 
   const hideNotification = useCallback(() => {
     setNotificationType(null)
   }, [])
 
-  const showNotification = useCallback(() => {
+  const showNotification = useCallback((type) => {
     clearTimeout(notificationTimer.current)
-    setNotificationType('show-add')
+    setNotificationType(type)
     notificationTimer.current = setTimeout(() => {
       setNotificationType(null)
     }, time)
