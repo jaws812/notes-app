@@ -30,7 +30,10 @@ export const NotesProvider = (props) => {
     sortOnPriority,
     setSortOnPriority,
     loadError,
+    setLoadError,
     isLoading,
+    setIsLoading,
+    loadNotes,
   } = useNotes()
 
   const {
@@ -49,6 +52,9 @@ export const NotesProvider = (props) => {
     showNotification,
     setSortOnPriority,
     firstIncompleteNoteRef,
+    loadNotes,
+    setLoadError,
+    setIsLoading,
   }), [
     deleteNote,
     deleteAllNotes,
@@ -60,6 +66,9 @@ export const NotesProvider = (props) => {
     showNotification,
     setSortOnPriority,
     firstIncompleteNoteRef,
+    loadNotes,
+    setLoadError,
+    setIsLoading,
   ])
 
   const data = useMemo(() => ({

@@ -13,6 +13,9 @@ const Note = () => {
   const {
     setSortOnPriority,
     firstIncompleteNoteRef,
+    loadNotes,
+    setLoadError,
+    setIsLoading,
   } = useContext(NotesActionsContext)
 
   const {
@@ -22,12 +25,25 @@ const Note = () => {
     isLoading,
   } = useContext(NotesDataContext)
 
-  if(isLoading){
+  if (isLoading) {
     return (<div>Идет загрузка страницы...</div>)
   }
 
   if (loadError) {
-    return (<div>Данных о заметках нет, проблемы с сервером</div>)
+    return (
+      <>
+        <div>Данных о заметках нет, проблемы с сервером</div>
+        <Button
+          className={css.retryButton}
+          fullWidth
+          onClick={() => {
+            setLoadError(false)
+            setIsLoading(true)
+            loadNotes()
+          }}
+        >Повторить снова</Button>
+      </>
+    )
   }
 
   return (

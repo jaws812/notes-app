@@ -96,6 +96,7 @@ const useNotes = () => {
         .then(() => dispatch({type: 'DELETE_ALL'}))
         .catch(() => {
           showNotification('delete-all-error')
+          loadNotes()
         })
     }
   }, [])
@@ -223,7 +224,10 @@ const useNotes = () => {
     sortOnPriority,
     setSortOnPriority,
     loadError,
+    setLoadError,
     isLoading,
+    setIsLoading,
+    loadNotes,
   }
 }
 
