@@ -64,6 +64,27 @@ const useNotes = () => {
     notificationType,
   } = useNotification(4000)
 
+  const loadNotes = useCallback(() => {
+    notesAPI.getAll().then((serverNotes) => {
+      dispatch({
+        type: 'SET_ALL',
+        notes: serverNotes.map((note) => {
+          if (!note.priority) {
+            return ({...note, priority: 'normal'})
+          } else {
+            return note
+          }
+        })
+      })
+    })
+      .catch(() => {
+        setLoadError(true)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  },[])
+
   const deleteAllNotes = useCallback(() => {
     const isConfirm = confirm('Вы уверены, что хотите удалить все заметки?')
 
@@ -133,24 +154,7 @@ const useNotes = () => {
   }, [filter])
 
   useEffect(() => {
-    notesAPI.getAll().then((serverNotes) => {
-      dispatch({
-        type: 'SET_ALL',
-        notes: serverNotes.map((note) => {
-          if (!note.priority) {
-            return ({...note, priority: 'normal'})
-          } else {
-            return note
-          }
-        })
-      })
-    })
-      .catch(() => {
-        setLoadError(true)
-      })
-      .finally(() => {
-        setIsLoading(false)
-      })
+    loadNotes()
   }, []);
 
   useEffect(() => {
