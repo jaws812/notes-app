@@ -14,8 +14,6 @@ const Note = () => {
     setSortOnPriority,
     firstIncompleteNoteRef,
     loadNotes,
-    setLoadError,
-    setIsLoading,
   } = useContext(NotesActionsContext)
 
   const {
@@ -37,9 +35,7 @@ const Note = () => {
           className={css.retryButton}
           fullWidth
           onClick={() => {
-            setLoadError(false)
-            setIsLoading(true)
-            loadNotes()
+            loadNotes(true)
           }}
         >Повторить снова</Button>
       </>

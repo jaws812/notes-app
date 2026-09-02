@@ -64,7 +64,11 @@ const useNotes = () => {
     notificationType,
   } = useNotification(4000)
 
-  const loadNotes = useCallback(() => {
+  const loadNotes = useCallback((showLoadScreen) => {
+    if (showLoadScreen) {
+      setIsLoading(true)
+    }
+
     notesAPI.getAll().then((serverNotes) => {
       dispatch({
         type: 'SET_ALL',
@@ -76,6 +80,7 @@ const useNotes = () => {
           }
         })
       })
+      setLoadError(false)
     })
       .catch(() => {
         setLoadError(true)
@@ -83,7 +88,7 @@ const useNotes = () => {
       .finally(() => {
         setIsLoading(false)
       })
-  },[])
+  }, [])
 
   const deleteAllNotes = useCallback(() => {
     const isConfirm = confirm('Вы уверены, что хотите удалить все заметки?')
@@ -96,7 +101,7 @@ const useNotes = () => {
         .then(() => dispatch({type: 'DELETE_ALL'}))
         .catch(() => {
           showNotification('delete-all-error')
-          loadNotes()
+          loadNotes(false)
         })
     }
   }, [])
@@ -155,7 +160,7 @@ const useNotes = () => {
   }, [filter])
 
   useEffect(() => {
-    loadNotes()
+    loadNotes(false)
   }, []);
 
   useEffect(() => {
@@ -224,9 +229,7 @@ const useNotes = () => {
     sortOnPriority,
     setSortOnPriority,
     loadError,
-    setLoadError,
     isLoading,
-    setIsLoading,
     loadNotes,
   }
 }
