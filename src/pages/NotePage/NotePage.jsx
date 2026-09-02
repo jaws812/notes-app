@@ -1,5 +1,12 @@
 import {useEffect, useState} from "react";
 import notesAPI from "@/shared/api/notes";
+import css from "./NotePage.module.scss";
+
+const priorityLabels = {
+  low: 'Низкий',
+  normal: 'Нормальный',
+  high: 'Высокий',
+}
 
 const NotePage = (props) => {
   const {params} = props
@@ -32,9 +39,11 @@ const NotePage = (props) => {
   }
 
   return (
-    <div>
-      <h1>{note.title}</h1>
-      {note.isDone ? 'Заметка выполнена' : 'Заметка не выполнена'}
+    <div className={css.notePage}>
+      <h1 className={css.title}>{note.title}</h1>
+      <div>{note.content}</div>
+      <div>{note.isDone ? 'Заметка выполнена' : 'Заметка не выполнена'}</div>
+      <div className={css.priority}>Приоритет: {priorityLabels[note.priority]}</div>
     </div>
   )
 }

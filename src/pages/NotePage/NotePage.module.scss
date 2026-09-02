@@ -1,0 +1,13 @@
+.notePage{
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 20px 15px;
+  background-color: var(--color-gray-5);
+  border-radius: var(--border-radius-sm);
+  font-size: 30px;
+}
+
+.title{
+  font-size: 45px;
+}
