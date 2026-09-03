@@ -1,6 +1,6 @@
 const RouterLink = (props) => {
   const {
-    className='',
+    className = '',
     to,
     children,
     ...rest

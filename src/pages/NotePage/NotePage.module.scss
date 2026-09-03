@@ -11,3 +11,24 @@
 .title{
   font-size: 45px;
 }
+
+.link{
+  color: var(--color-gray-8);
+  padding: 5px 10px;
+  border: var(--border-white);
+  border-radius: var(--border-radius-sm);
+  text-decoration: none;
+}
+
+.buttons{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+}
+
+.form{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

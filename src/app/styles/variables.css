@@ -23,6 +23,7 @@
   --color-red-2: #DC2626;
 
   --border: 1px solid var(--color-gray-4);
+  --border-white: 1px solid var(--color-gray-8);
   --border-radius-sm: 10px;
   --border-radius-md: 14px;
   --border-radius-lg: 18px;
