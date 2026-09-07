@@ -25,6 +25,10 @@ const NotePage = (props) => {
     isDone: '',
     priority: '',
   })
+  const [editTitleNote, setEditTitleNote] = useState(null)
+  const [editContentNote, setEditContentNote] = useState(null)
+  const [editToggleNote, setEditToggleNote] = useState(null)
+  const [editPriority, setEditPriority] = useState(null)
 
   useEffect(() => {
     notesAPI.getById(noteId)
@@ -48,6 +52,10 @@ const NotePage = (props) => {
         isDone: '',
         priority: '',
       })
+      setEditTitleNote(null)
+      setEditContentNote(null)
+      setEditToggleNote(null)
+      setEditPriority(null)
     } else {
       setDraft({
         title: note.title,
@@ -55,6 +63,10 @@ const NotePage = (props) => {
         isDone: note.isDone,
         priority: note.priority,
       })
+      setEditTitleNote(draft.title)
+      setEditContentNote(draft.content)
+      setEditToggleNote(draft.isDone)
+      setEditPriority(draft.priority)
     }
     setIsEditing(!isEditing)
   }
@@ -88,7 +100,18 @@ const NotePage = (props) => {
       )}
       {isEditing && (
         <>
-          <EditNoteForm css={css} draft={draft}/>
+          <EditNoteForm
+            css={css}
+            draft={draft}
+            editTitleNote={editTitleNote}
+            setEditTitleNote={setEditTitleNote}
+            editContentNote={editContentNote}
+            setEditContentNote={setEditContentNote}
+            editToggleNote={editToggleNote}
+            setEditToggleNote={setEditToggleNote}
+            editPriority={editPriority}
+            setEditPriority={setEditPriority}
+          />
           <div className={css.buttons}>
             <Button onClick={onClick}>Отменить редактирование</Button>
             <Button onClick={onSave}>Сохранить</Button>
