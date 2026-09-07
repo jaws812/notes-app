@@ -37,23 +37,47 @@ const EditNoteForm = (props) => {
     const {value, id} = event.target
 
     if (id === 'title-edit') {
-      setIsEdit({
-        ...isEdit,
-        title: true,
-      })
+      if (!isEdit.title) {
+        setIsEdit({
+          ...isEdit,
+          title: true,
+        })
+      }
       setEditTitleNote(value)
     } else if (id === 'content-edit') {
-      setIsEdit({
-        ...isEdit,
-        content: true,
-      })
+      if (!isEdit.content) {
+        setIsEdit({
+          ...isEdit,
+          content: true,
+        })
+      }
       setEditContentNote(value)
     }
   }
 
+  const onChange = (event) => {
+    if (!isEdit.priority) {
+      setIsEdit({
+        ...isEdit,
+        priority: true,
+      })
+    }
+    setEditPriority(event.target.value)
+  }
+
+  const onChangeCheckbox = (event) => {
+    if (!isEdit.isDone) {
+      setIsEdit({
+        ...isEdit,
+        isDone: true,
+      })
+    }
+    setEditToggleNote(event.target.checked)
+  }
+
   return (
     <form
-      css={css.form}
+      className={css.form}
       onSubmit={onSubmit}
     >
       <Field
@@ -72,11 +96,28 @@ const EditNoteForm = (props) => {
         value={isEdit.content ? editContentNote : draft.content}
         onInput={onInput}
       />
+      <div className={css.wrapper}>
+        <label htmlFor="edit-status">Измените готовность({
+          isEdit.isDone
+            ? `${editToggleNote ? 'Выполнена' : 'Не выполнена'}`
+            : `${draft.isDone ? 'Выполнена' : 'Не выполнена'}`
+        })
+        </label>
+        <input
+          className={css.checkbox}
+          type="checkbox"
+          id="edit-status"
+          checked={isEdit.isDone ? editToggleNote : draft.isDone}
+          onChange={onChangeCheckbox}
+        />
+      </div>
+
       <RadioGroup
         name="edit"
         legend="Выберите приоритет для заметки"
         options={priorityVariables}
-        valueActive={draft.priority}
+        valueActive={isEdit.priority ? editPriority : draft.priority}
+        onChange={onChange}
       />
     </form>
   )
