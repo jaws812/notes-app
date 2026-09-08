@@ -1,7 +1,7 @@
 import {useCallback, useEffect, useRef, useState} from "react";
 
 const useNotification = (time = 4000) => {
-  // type: null / 'show-add' / 'add-error' / 'get-all-error' / 'delete-error' / 'toggle-error' / 'delete-all-error'
+  // type: null / 'show-add' / 'add-error' / 'get-all-error' / 'delete-error' / 'toggle-error' / 'delete-all-error' / 'edit-error'
   const [notificationType, setNotificationType] = useState(null)
   const notificationTimer = useRef(null)
 

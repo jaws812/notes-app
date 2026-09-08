@@ -66,6 +66,19 @@ const notesAPI = {
         }
       })
   },
+
+  edit: (id, editNote) => {
+    return fetch(`${URL}/${id}`, {
+      method: 'PATCH',
+      headers,
+      body: JSON.stringify(editNote)
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Не удалось изменить заметку, проблемы с сервером")
+        }
+      })
+  },
 }
 
 export default notesAPI

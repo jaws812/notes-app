@@ -3,6 +3,8 @@ import notesAPI from "@/shared/api/notes";
 import RouterLink from "@/shared/ui/RouterLink";
 import Button from "@/shared/ui/Button";
 import EditNoteForm from "@/features/edit-note";
+import useNotification from "@/shared/utils/useNotification";
+import ShowNotification from "@/features/show-notification";
 import css from "./NotePage.module.scss";
 
 const priorityLabels = {
@@ -25,10 +27,20 @@ const NotePage = (props) => {
     isDone: '',
     priority: '',
   })
+  const [isEdit, setIsEdit] = useState({
+    title: false,
+    content: false,
+    isDone: false,
+    priority: false,
+  })
   const [editTitleNote, setEditTitleNote] = useState(null)
   const [editContentNote, setEditContentNote] = useState(null)
   const [editToggleNote, setEditToggleNote] = useState(null)
-  const [editPriority, setEditPriority] = useState(null)
+  const [editPriorityNote, setEditPriorityNote] = useState(null)
+
+  const {
+    showNotification,
+  } = useNotification()
 
   useEffect(() => {
     notesAPI.getById(noteId)
@@ -55,7 +67,7 @@ const NotePage = (props) => {
       setEditTitleNote(null)
       setEditContentNote(null)
       setEditToggleNote(null)
-      setEditPriority(null)
+      setEditPriorityNote(null)
     } else {
       setDraft({
         title: note.title,
@@ -66,7 +78,7 @@ const NotePage = (props) => {
       setEditTitleNote(draft.title)
       setEditContentNote(draft.content)
       setEditToggleNote(draft.isDone)
-      setEditPriority(draft.priority)
+      setEditPriorityNote(draft.priority)
     }
     setIsEditing(!isEditing)
   }
@@ -80,7 +92,27 @@ const NotePage = (props) => {
   }
 
   const onSave = () => {
-    //
+    const editNote = {
+      title: editTitleNote ? editTitleNote : draft.title,
+      content: editContentNote ? editContentNote : draft.content,
+      isDone: editToggleNote !== null ? editToggleNote : draft.isDone,
+      priority: editPriorityNote ? editPriorityNote : draft.priority,
+    }
+
+    notesAPI.edit(note.id, editNote)
+      .then(() => {
+        setNote(editNote)
+        setIsEditing(false)
+        setIsEdit({
+          title: false,
+          content: false,
+          isDone: false,
+          priority: false,
+        })
+      })
+      .catch(() => {
+        showNotification('edit-error')
+      })
   }
 
   return (
@@ -109,8 +141,10 @@ const NotePage = (props) => {
             setEditContentNote={setEditContentNote}
             editToggleNote={editToggleNote}
             setEditToggleNote={setEditToggleNote}
-            editPriority={editPriority}
-            setEditPriority={setEditPriority}
+            editPriorityNote={editPriorityNote}
+            setEditPriorityNote={setEditPriorityNote}
+            isEdit={isEdit}
+            setIsEdit={setIsEdit}
           />
           <div className={css.buttons}>
             <Button onClick={onClick}>Отменить редактирование</Button>

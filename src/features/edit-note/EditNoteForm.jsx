@@ -1,6 +1,5 @@
 import Field from "@/shared/ui/Field";
 import RadioGroup from "@/shared/ui/RadioGroup";
-import {useState} from "react";
 
 const priorityVariables = [
   {value: 'low', text: 'Низкий'},
@@ -17,17 +16,12 @@ const EditNoteForm = (props) => {
     setEditContentNote,
     editToggleNote,
     setEditToggleNote,
-    editPriority,
-    setEditPriority,
+    editPriorityNote,
+    setEditPriorityNote,
+    isEdit,
+    setIsEdit,
     css,
   } = props
-
-  const [isEdit, setIsEdit] = useState({
-    title: false,
-    content: false,
-    isDone: false,
-    priority: false,
-  })
 
   const onSubmit = (event) => {
     event.preventDefault()
@@ -62,7 +56,7 @@ const EditNoteForm = (props) => {
         priority: true,
       })
     }
-    setEditPriority(event.target.value)
+    setEditPriorityNote(event.target.value)
   }
 
   const onChangeCheckbox = (event) => {
@@ -116,7 +110,7 @@ const EditNoteForm = (props) => {
         name="edit"
         legend="Выберите приоритет для заметки"
         options={priorityVariables}
-        valueActive={isEdit.priority ? editPriority : draft.priority}
+        valueActive={isEdit.priority ? editPriorityNote : draft.priority}
         onChange={onChange}
       />
     </form>
