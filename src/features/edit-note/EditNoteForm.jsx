@@ -10,16 +10,7 @@ const priorityVariables = [
 const EditNoteForm = (props) => {
   const {
     draft,
-    editTitleNote,
-    setEditTitleNote,
-    editContentNote,
-    setEditContentNote,
-    editToggleNote,
-    setEditToggleNote,
-    editPriorityNote,
-    setEditPriorityNote,
-    isEdit,
-    setIsEdit,
+    setDraft,
     css,
   } = props
 
@@ -31,42 +22,18 @@ const EditNoteForm = (props) => {
     const {value, id} = event.target
 
     if (id === 'title-edit') {
-      if (!isEdit.title) {
-        setIsEdit({
-          ...isEdit,
-          title: true,
-        })
-      }
-      setEditTitleNote(value)
+      setDraft({...draft, title: value})
     } else if (id === 'content-edit') {
-      if (!isEdit.content) {
-        setIsEdit({
-          ...isEdit,
-          content: true,
-        })
-      }
-      setEditContentNote(value)
+      setDraft({...draft, content: value})
     }
   }
 
   const onChange = (event) => {
-    if (!isEdit.priority) {
-      setIsEdit({
-        ...isEdit,
-        priority: true,
-      })
-    }
-    setEditPriorityNote(event.target.value)
+    setDraft({...draft, priority: event.target.value})
   }
 
   const onChangeCheckbox = (event) => {
-    if (!isEdit.isDone) {
-      setIsEdit({
-        ...isEdit,
-        isDone: true,
-      })
-    }
-    setEditToggleNote(event.target.checked)
+    setDraft({...draft, isDone: event.target.checked})
   }
 
   return (
@@ -79,7 +46,7 @@ const EditNoteForm = (props) => {
         id="title-edit"
         type="text"
         label="Измените заголовок заметки"
-        value={isEdit.title ? editTitleNote : draft.title}
+        value={draft.title}
         onInput={onInput}
       />
       <Field
@@ -90,21 +57,17 @@ const EditNoteForm = (props) => {
         cols={50}
         maxLength={1000}
         label="Измените текст заметки"
-        value={isEdit.content ? editContentNote : draft.content}
+        value={draft.content}
         onInput={onInput}
       />
       <div className={css.wrapper}>
-        <label htmlFor="edit-status">Измените готовность({
-          isEdit.isDone
-            ? `${editToggleNote ? 'Выполнена' : 'Не выполнена'}`
-            : `${draft.isDone ? 'Выполнена' : 'Не выполнена'}`
-        })
+        <label htmlFor="edit-status">Измените готовность({draft.isDone ? 'Выполнена' : 'Не выполнена'})
         </label>
         <input
           className={css.checkbox}
           type="checkbox"
           id="edit-status"
-          checked={isEdit.isDone ? editToggleNote : draft.isDone}
+          checked={draft.isDone}
           onChange={onChangeCheckbox}
         />
       </div>
@@ -112,7 +75,7 @@ const EditNoteForm = (props) => {
         name="edit"
         legend="Выберите приоритет для заметки"
         options={priorityVariables}
-        valueActive={isEdit.priority ? editPriorityNote : draft.priority}
+        valueActive={draft.priority}
         onChange={onChange}
       />
     </form>
