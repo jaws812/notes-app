@@ -85,7 +85,10 @@ const EditNoteForm = (props) => {
       <Field
         className="note__field"
         id="content-edit"
-        type="text"
+        type="textarea"
+        rows={30}
+        cols={50}
+        maxLength={1000}
         label="Измените текст заметки"
         value={isEdit.content ? editContentNote : draft.content}
         onInput={onInput}
@@ -105,7 +108,6 @@ const EditNoteForm = (props) => {
           onChange={onChangeCheckbox}
         />
       </div>
-
       <RadioGroup
         name="edit"
         legend="Выберите приоритет для заметки"

@@ -4,8 +4,12 @@ import RouterLink from "@/shared/ui/RouterLink";
 import Button from "@/shared/ui/Button";
 import EditNoteForm from "@/features/edit-note";
 import useNotification from "@/shared/utils/useNotification";
-import ShowNotification from "@/features/show-notification";
 import css from "./NotePage.module.scss";
+import Notification from "@/shared/ui/Notification";
+
+const textMessages = {
+  'edit-error': 'Не удалось отредактировать заметку, проблемы с сервером.',
+}
 
 const priorityLabels = {
   low: 'Низкий',
@@ -39,7 +43,9 @@ const NotePage = (props) => {
   const [editPriorityNote, setEditPriorityNote] = useState(null)
 
   const {
+    hideNotification,
     showNotification,
+    notificationType,
   } = useNotification()
 
   useEffect(() => {
@@ -63,6 +69,12 @@ const NotePage = (props) => {
         content: '',
         isDone: '',
         priority: '',
+      })
+      setIsEdit({
+        title: false,
+        content: false,
+        isDone: false,
+        priority: false,
       })
       setEditTitleNote(null)
       setEditContentNote(null)
@@ -100,8 +112,8 @@ const NotePage = (props) => {
     }
 
     notesAPI.edit(note.id, editNote)
-      .then(() => {
-        setNote(editNote)
+      .then((editedNote) => {
+        setNote(editedNote)
         setIsEditing(false)
         setIsEdit({
           title: false,
@@ -157,6 +169,14 @@ const NotePage = (props) => {
         </>
       )
       }
+      <div role="status">
+        {notificationType !== null &&
+          <Notification
+            text={textMessages[notificationType]}
+            isErrorMessage={notificationType !== "show-add"}
+            onClick={hideNotification}
+          />}
+      </div>
     </div>
   )
 }

@@ -77,6 +77,7 @@ const notesAPI = {
         if (!response.ok) {
           throw new Error("Не удалось изменить заметку, проблемы с сервером")
         }
+        return response.json()
       })
   },
 }
