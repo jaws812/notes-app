@@ -21,11 +21,7 @@ const EditNoteForm = (props) => {
   const onInput = (event) => {
     const {value, id} = event.target
 
-    if (id === 'title-edit') {
-      setDraft({...draft, title: value})
-    } else if (id === 'content-edit') {
-      setDraft({...draft, content: value})
-    }
+    setDraft({...draft, [id]: value})
   }
 
   const onChange = (event) => {
@@ -43,7 +39,7 @@ const EditNoteForm = (props) => {
     >
       <Field
         className="note__field"
-        id="title-edit"
+        id="title"
         type="text"
         label="Измените заголовок заметки"
         value={draft.title}
@@ -51,7 +47,7 @@ const EditNoteForm = (props) => {
       />
       <Field
         className="note__field"
-        id="content-edit"
+        id="content"
         type="textarea"
         rows={30}
         cols={50}
