@@ -1,7 +1,7 @@
 import Field from "@/shared/ui/Field";
 import RadioGroup from "@/shared/ui/RadioGroup";
-import css from "@/pages/NotePage/NotePage.module.scss";
 import Button from "@/shared/ui/Button";
+import {useState} from "react";
 
 const priorityVariables = [
   {value: 'low', text: 'Низкий'},
@@ -18,14 +18,25 @@ const EditNoteForm = (props) => {
     css,
   } = props
 
+  const [errorTitle, setErrorTitle] = useState('')
+  const [errorContent, setErrorContent] = useState('')
+
   const onSubmit = (event) => {
     event.preventDefault()
   }
 
   const onInput = (event) => {
     const {value, id} = event.target
+    const clearValue = value.trim()
+    const hasOnlySpaces = value.length > 0 && clearValue.length === 0
 
     setDraft({...draft, [id]: value})
+
+    if (id === 'title') {
+      setErrorTitle(hasOnlySpaces ? 'Измененный текст заголовка не может быть пустым' : '')
+    } else if (id === 'content') {
+      setErrorContent(hasOnlySpaces ? 'Измененный текст заметки не может быть пустым' : '')
+    }
   }
 
   const onChange = (event) => {
@@ -48,6 +59,7 @@ const EditNoteForm = (props) => {
         label="Измените заголовок заметки"
         value={draft.title}
         onInput={onInput}
+        error={errorTitle}
       />
       <Field
         className="note__field"
@@ -59,6 +71,7 @@ const EditNoteForm = (props) => {
         label="Измените текст заметки"
         value={draft.content}
         onInput={onInput}
+        error={errorContent}
       />
       <div className={css.wrapper}>
         <label htmlFor="edit-status">Измените готовность({draft.isDone ? 'Выполнена' : 'Не выполнена'})
@@ -80,7 +93,10 @@ const EditNoteForm = (props) => {
       />
       <div className={css.buttons}>
         <Button onClick={onClick}>Отменить редактирование</Button>
-        <Button onClick={onSave} type="submit">Сохранить</Button>
+        <Button
+          onClick={onSave}
+          type="submit"
+        >Сохранить</Button>
       </div>
     </form>
   )

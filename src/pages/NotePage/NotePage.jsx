@@ -28,7 +28,7 @@ const NotePage = (props) => {
   const [draft, setDraft] = useState({
     title: '',
     content: '',
-    isDone: '',
+    isDone: false,
     priority: '',
   })
 
@@ -52,12 +52,21 @@ const NotePage = (props) => {
       })
   }, [noteId]);
 
+  if (isLoading) {
+    return <div>Загрузка...</div>
+  }
+
+  if (hasError) {
+    return <div>Заметка не найдена!</div>
+  }
+
+
   const onClick = () => {
     if (isEditing) {
       setDraft({
         title: '',
         content: '',
-        isDone: '',
+        isDone: false,
         priority: '',
       })
     } else {
@@ -71,14 +80,6 @@ const NotePage = (props) => {
     setIsEditing(!isEditing)
   }
 
-  if (isLoading) {
-    return <div>Загрузка...</div>
-  }
-
-  if (hasError) {
-    return <div>Заметка не найдена!</div>
-  }
-
   const onSave = () => {
     const editNote = {
       title: draft.title,
@@ -87,14 +88,21 @@ const NotePage = (props) => {
       priority: draft.priority,
     }
 
-    notesAPI.edit(note.id, editNote)
-      .then((editedNote) => {
-        setNote(editedNote)
-        setIsEditing(false)
-      })
-      .catch(() => {
-        showNotification('edit-error')
-      })
+    const clearEditNoteTitle = editNote.title.trim()
+    const isEditNoteTitleEmpty = clearEditNoteTitle.length === 0
+    const clearEditNoteContent = editNote.content.trim()
+    const isEditNoteContentEmpty = clearEditNoteContent.length === 0
+
+    if (!isEditNoteTitleEmpty && !isEditNoteContentEmpty) {
+      notesAPI.edit(note.id, editNote)
+        .then((editedNote) => {
+          setNote(editedNote)
+          setIsEditing(false)
+        })
+        .catch(() => {
+          showNotification('edit-error')
+        })
+    }
   }
 
   return (
@@ -106,10 +114,6 @@ const NotePage = (props) => {
           <div>{note.isDone ? 'Заметка выполнена' : 'Заметка не выполнена'}</div>
           <div className={css.priority}>Приоритет: {priorityLabels[note.priority]}</div>
           <Button onClick={onClick}>Редактировать заметку</Button>
-          <RouterLink
-            className={css.link}
-            to={`/`}
-          >Вернуться к списку заметок</RouterLink>
         </>
       )}
       {isEditing && (
@@ -121,18 +125,18 @@ const NotePage = (props) => {
             onClick={onClick}
             onSave={onSave}
           />
-          <RouterLink
-            className={css.link}
-            to={`/`}
-          >Вернуться к списку заметок</RouterLink>
         </>
       )
       }
+      <RouterLink
+        className={css.link}
+        to={`/`}
+      >Вернуться к списку заметок</RouterLink>
       <div role="status">
         {notificationType !== null &&
           <Notification
             text={textMessages[notificationType]}
-            isErrorMessage={notificationType !== "show-add"}
+            isErrorMessage={true}
             onClick={hideNotification}
           />}
       </div>
