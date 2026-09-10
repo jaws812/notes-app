@@ -1,5 +1,7 @@
 import Field from "@/shared/ui/Field";
 import RadioGroup from "@/shared/ui/RadioGroup";
+import css from "@/pages/NotePage/NotePage.module.scss";
+import Button from "@/shared/ui/Button";
 
 const priorityVariables = [
   {value: 'low', text: 'Низкий'},
@@ -11,6 +13,8 @@ const EditNoteForm = (props) => {
   const {
     draft,
     setDraft,
+    onClick,
+    onSave,
     css,
   } = props
 
@@ -74,6 +78,10 @@ const EditNoteForm = (props) => {
         valueActive={draft.priority}
         onChange={onChange}
       />
+      <div className={css.buttons}>
+        <Button onClick={onClick}>Отменить редактирование</Button>
+        <Button onClick={onSave} type="submit">Сохранить</Button>
+      </div>
     </form>
   )
 }

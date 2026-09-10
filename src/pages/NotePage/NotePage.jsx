@@ -118,11 +118,9 @@ const NotePage = (props) => {
             css={css}
             draft={draft}
             setDraft={setDraft}
+            onClick={onClick}
+            onSave={onSave}
           />
-          <div className={css.buttons}>
-            <Button onClick={onClick}>Отменить редактирование</Button>
-            <Button onClick={onSave}>Сохранить</Button>
-          </div>
           <RouterLink
             className={css.link}
             to={`/`}
