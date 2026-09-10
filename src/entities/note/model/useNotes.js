@@ -104,7 +104,7 @@ const useNotes = () => {
           loadNotes(false)
         })
     }
-  }, [])
+  }, [showNotification, loadNotes])
 
   const deleteNote = useCallback((noteId) => {
     notesAPI.delete(noteId)
@@ -118,7 +118,7 @@ const useNotes = () => {
       .catch(() => {
         showNotification('delete-error')
       })
-  }, [])
+  }, [showNotification])
 
   const toggleNoteComplete = useCallback((noteId, isDone) => {
     notesAPI.toggleComplete(noteId, isDone)
@@ -134,7 +134,7 @@ const useNotes = () => {
       .catch(() => {
         showNotification('toggle-error')
       })
-  }, [filter])
+  }, [filter, showNotification])
 
   const addNote = useCallback((title, content, priority, callbackAfterAdding) => {
     const newNote = {
@@ -157,7 +157,7 @@ const useNotes = () => {
       .catch(() => {
         showNotification('add-error')
       })
-  }, [filter])
+  }, [filter, showNotification])
 
   useEffect(() => {
     loadNotes(false)
