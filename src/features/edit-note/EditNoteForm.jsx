@@ -96,6 +96,7 @@ const EditNoteForm = (props) => {
         <Button
           onClick={onSave}
           type="submit"
+          isDisabled={draft.title.trim().length === 0 || draft.content.trim().length === 0}
         >Сохранить</Button>
       </div>
     </form>
