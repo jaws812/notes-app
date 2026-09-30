@@ -61,7 +61,7 @@ const NotePage = (props) => {
   }
 
 
-  const onClick = () => {
+  const onCancel = () => {
     if (isEditing) {
       setDraft({
         title: '',
@@ -113,7 +113,7 @@ const NotePage = (props) => {
           <div>{note.content}</div>
           <div>{note.isDone ? 'Заметка выполнена' : 'Заметка не выполнена'}</div>
           <div className={css.priority}>Приоритет: {priorityLabels[note.priority]}</div>
-          <Button onClick={onClick}>Редактировать заметку</Button>
+          <Button onClick={onCancel}>Редактировать заметку</Button>
         </>
       )}
       {isEditing && (
@@ -122,7 +122,7 @@ const NotePage = (props) => {
             css={css}
             draft={draft}
             setDraft={setDraft}
-            onClick={onClick}
+            onClick={onCancel}
             onSave={onSave}
           />
         </>

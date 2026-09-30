@@ -105,7 +105,7 @@ const AddNoteForm = (props) => {
         className="note__button"
         type="submit"
         title="Добавить заметку"
-        isDisabled={isNewNoteTitleEmpty || newNoteContent.trim().length === 0}
+        isDisabled={isNewNoteTitleEmpty || isNewNoteContentEmpty}
       >Добавить заметку</Button>
     </form>
   )
