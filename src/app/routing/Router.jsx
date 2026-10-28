@@ -15,7 +15,7 @@ const matchPath = (path, route) => {
       const paramName = routePaths[i].slice(1)
 
       params[paramName] = pathParts[i]
-    } else if(routePaths[i] !== pathParts[i]){
+    } else if (routePaths[i] !== pathParts[i]) {
       return null
     }
   }
@@ -50,10 +50,10 @@ const Router = (props) => {
   // получаем актуальный путь
   const path = useRoute()
 
-  for(const route in routes) {
+  for (const route in routes) {
     const params = matchPath(path, route)
 
-    if(params){
+    if (params) {
       const Page = routes[route]
 
       return <Page params={params} />
