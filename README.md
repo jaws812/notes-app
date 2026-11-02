@@ -1,16 +1,94 @@
-# React + Vite
+# notes-app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Приложение для заметок на React: создание, поиск, фильтры, приоритеты и редактирование заметок с сохранением на сервере.
 
-Currently, two official plugins are available:
+## Возможности
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Создание заметки: заголовок, текст и приоритет. Пустые значения и строки из одних пробелов не принимаются.
+- Отметка о выполнении, удаление одной заметки или всех сразу (с подтверждением).
+- Поиск по заголовку и тексту с подсветкой найденного.
+- Фильтры «все / активные / выполненные» и сортировка по приоритету.
+- Счетчик выполненных заметок и кнопка перехода к первой невыполненной.
+- Отдельная страница заметки с редактированием всех полей.
+- Анимации появления и удаления заметок.
+- Обработка ошибок сервера: уведомления и кнопка повторной загрузки.
 
-## React Compiler
+## Стек
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19, Vite
+- SCSS + CSS Modules
+- Архитектура Feature-Sliced Design (FSD)
+- json-server — REST API для разработки
+- ESLint
 
-## Expanding the ESLint configuration
+## Что интересного в коде
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Свой роутер без библиотек.** Переходы через History API: [`RouterLink`](src/shared/ui/RouterLink/RouterLink.jsx) меняет адрес через `pushState`, а [`Router`](src/app/routing/Router.jsx) слушает `popstate`, сопоставляет путь с шаблонами вида `/notes/:id` и передает параметры в страницу.
+- **Состояние заметок на `useReducer`.** Все изменения списка — действия редьюсера (`ADD`, `DELETE`, `TOGGLE_COMPLETE` и другие) в [`useNotes`](src/entities/note/model/useNotes.js). Отфильтрованный, найденный и отсортированный списки вычисляются из одного источника через `useMemo`.
+- **Контекст разделен на данные и действия.** [`NotesContext`](src/entities/note/model/NotesContext.jsx) отдает два контекста. Действия стабильны (`useCallback` + `useMemo`), поэтому компоненты, которые только вызывают действия, не перерисовываются при изменении данных. Списки дополнительно обернуты в `memo`.
+- **Отдельный слой API.** Все запросы — в [`notesAPI`](src/shared/api/notes/index.js). Каждый проверяет `response.ok` и при ошибке бросает исключение, а интерфейс показывает понятное уведомление. Если удаление всех заметок сорвалось на середине, список перезагружается с сервера, чтобы показать реальное состояние.
+- **Безопасная подсветка поиска.** Перед вставкой через `dangerouslySetInnerHTML` текст экранируется (защита от XSS), а поисковый запрос экранируется для регулярного выражения — см. [`highlight.js`](src/shared/utils/highlight.js).
+- **Анимация удаления.** Сначала заметка получает класс исчезновения, и только после анимации удаляется из состояния.
+
+## Запуск
+
+Нужен Node.js 20.19+ или 22.12+.
+
+1. Установить зависимости:
+
+   ```bash
+   npm ci
+   ```
+
+2. Создать базу данных из примера — в нем уже есть несколько заметок:
+
+   ```bash
+   cp db.example.json5 db.json5
+   ```
+
+   Файл `db.json5` не хранится в репозитории: json-server записывает в него все изменения заметок.
+
+3. Запустить API в отдельном терминале — он будет доступен на `http://localhost:3001`:
+
+   ```bash
+   npm run server
+   ```
+
+4. Запустить приложение:
+
+   ```bash
+   npm run dev
+   ```
+
+Другие команды:
+
+```bash
+npm run build   # собрать проект в папку dist/
+npm run lint    # проверить код ESLint
+```
+
+## Структура
+
+Точка входа — `src/main.jsx`.
+
+| Слой | Что лежит |
+|---|---|
+| `app` | корневой компонент, свой роутер, глобальные стили |
+| `pages` | страницы: список заметок и страница одной заметки |
+| `widgets` | главный экран со списком и всеми инструментами |
+| `features` | действия пользователя: добавление, редактирование, поиск, фильтры, статистика, уведомления |
+| `entities` | сущность «заметка»: контекст, редьюсер, хуки, карточка и список |
+| `shared` | API, переиспользуемые компоненты (кнопка, поле, радиокнопки, уведомление, ссылка) и утилиты |
+
+## Как появился проект
+
+Начинал проект по курсу — там были базовые операции с заметками и поиск.
+Дальше развивал его самостоятельно: добавил приоритеты и сортировку, страницу заметки
+с редактированием, роутер, обработку ошибок сервера и уведомления, разделил контекст
+на данные и действия.
+
+## В планах
+
+- Перевести проект на TypeScript.
+- Покрыть тестами (Vitest + React Testing Library).
+- Выложить демо-версию с хранением заметок в браузере.
