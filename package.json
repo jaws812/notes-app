@@ -8,7 +8,8 @@
     "server": "json-server db.json5 --watch --port 3001",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "react": "^19.2.7",
@@ -25,6 +26,7 @@
     "globals": "^17.7.0",
     "json-server": "^1.0.0-beta.15",
     "sass": "^1.101.0",
+    "typescript": "^7.0.2",
     "vite": "^8.1.1"
   }
 }
