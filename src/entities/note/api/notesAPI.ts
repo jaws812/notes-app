@@ -1,3 +1,5 @@
+import type {Note, NewNote} from "../model/types";
+
 const URL = 'http://localhost:3001/notes'
 
 const headers = {
@@ -5,7 +7,7 @@ const headers = {
 }
 
 const notesAPI = {
-  getAll: () => {
+  getAll: (): Promise<Note[]> => {
     return fetch(URL)
       .then((response) => {
         if (!response.ok) {
@@ -15,7 +17,7 @@ const notesAPI = {
       })
   },
 
-  getById: (id) => {
+  getById: (id: string): Promise<Note> => {
     return fetch(`${URL}/${id}`)
       .then((response) => {
         if (!response.ok) {
@@ -25,7 +27,7 @@ const notesAPI = {
       })
   },
 
-  add: (note) => {
+  add: (note: NewNote): Promise<Note> => {
     return fetch(URL, {
       method: 'POST',
       headers,
@@ -39,7 +41,7 @@ const notesAPI = {
       })
   },
 
-  delete: (id) => {
+  delete: (id: string): Promise<void> => {
     return fetch(`${URL}/${id}`, {method: 'DELETE'})
       .then((response) => {
         if (!response.ok) {
@@ -48,13 +50,13 @@ const notesAPI = {
       })
   },
 
-  deleteAll: (notes) => {
+  deleteAll: (notes: Note[]): Promise<void[]> => {
     return Promise.all(
       notes.map(({id}) => notesAPI.delete(id))
     )
   },
 
-  toggleComplete: (id, isDone) => {
+  toggleComplete: (id: string, isDone: boolean): Promise<void> => {
     return fetch(`${URL}/${id}`, {
       method: 'PATCH',
       headers,
@@ -67,7 +69,7 @@ const notesAPI = {
       })
   },
 
-  edit: (id, editNote) => {
+  edit: (id: string, editNote: NewNote): Promise<Note> => {
     return fetch(`${URL}/${id}`, {
       method: 'PATCH',
       headers,

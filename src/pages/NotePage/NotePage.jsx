@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import notesAPI from "@/shared/api/notes";
+import {notesAPI} from "@/entities/note";
 import RouterLink from "@/shared/ui/RouterLink";
 import Button from "@/shared/ui/Button";
 import EditNoteForm from "@/features/edit-note";

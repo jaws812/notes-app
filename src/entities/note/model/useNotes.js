@@ -4,7 +4,7 @@ import {
   useMemo, useReducer,
   useState,
 } from "react";
-import notesAPI from "@/shared/api/notes";
+import notesAPI from "../api/notesAPI";
 import useNotification from "@/shared/utils/useNotification";
 
 const valuePriority = {

@@ -1,6 +1,6 @@
-type NotePriority = 'low' | 'normal' | 'high'
+export type NotePriority = 'low' | 'normal' | 'high'
 
-interface Note {
+export interface Note {
   id: string;
   title: string;
   content: string;
@@ -8,4 +8,4 @@ interface Note {
   isDone: boolean;
 }
 
-type NewNote = Omit<Note, 'id'>
+export type NewNote = Omit<Note, 'id'>
