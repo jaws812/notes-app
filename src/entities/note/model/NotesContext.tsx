@@ -1,5 +1,5 @@
-import {createContext, useMemo, ReactElement} from "react"
-import type {Dispatch, SetStateAction, RefObject} from "react"
+import {createContext, useMemo} from "react"
+import type {ReactElement, Dispatch, SetStateAction, RefObject} from "react"
 import useNotes from "./useNotes";
 import useIncompleteNoteScroll from "./useIncompleteNoteScroll";
 import type {Note, NotesFilter, NotePriority} from './types'
@@ -31,7 +31,7 @@ interface DataType {
   disappearingNoteId: string | null;
   appearingNoteId: string | null;
   filter: NotesFilter;
-  notificationType: NotificationType;
+  notificationType: NotificationType | null;
   sortOnPriority: boolean;
   firstIncompleteNoteId: string | undefined;
   loadError: boolean;

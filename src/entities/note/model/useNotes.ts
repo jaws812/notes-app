@@ -7,7 +7,7 @@ import {
 import {notesReducer} from "./notesReducer"
 import notesAPI from "../api/notesAPI";
 import useNotification from "@/shared/utils/useNotification";
-import {NotePriority, NotesFilter, NewNote} from "./types";
+import type {NotePriority, NotesFilter, NewNote} from "./types";
 
 const valuePriority: Record<NotePriority, number> = {
   low: 0,

@@ -6,4 +6,3 @@ export type NotificationType =
   | 'toggle-error'
   | 'delete-all-error'
   | 'edit-error'
-  | null

@@ -2,7 +2,7 @@ import {useCallback, useEffect, useRef, useState} from "react";
 import type {NotificationType} from './types'
 
 const useNotification = (time = 4000) => {
-  const [notificationType, setNotificationType] = useState<NotificationType>(null)
+  const [notificationType, setNotificationType] = useState<NotificationType | null>(null)
   const notificationTimer = useRef<number | null>(null)
 
   const hideNotification = useCallback(() => {
