@@ -1,8 +1,21 @@
 import s from './Button.module.scss'
+import type {MouseEventHandler, ReactNode} from "react";
 
-const Button = (props) => {
+type ButtonType = "button" | "submit" | "reset"
+
+interface ButtonProps {
+  className?: string;
+  children: ReactNode;
+  type?: ButtonType;
+  title?: string;
+  fullWidth?: boolean;
+  isDisabled?: boolean;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+}
+
+const Button = (props: ButtonProps) => {
   const {
-    className='',
+    className = '',
     children,
     type = "button",
     title,
