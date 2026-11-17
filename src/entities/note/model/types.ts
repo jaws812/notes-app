@@ -9,3 +9,5 @@ export interface Note {
 }
 
 export type NewNote = Omit<Note, 'id'>
+
+export type NotesFilter = 'all' | 'completed' | 'active'

@@ -7,22 +7,20 @@ import {
 import {notesReducer} from "./notesReducer"
 import notesAPI from "../api/notesAPI";
 import useNotification from "@/shared/utils/useNotification";
+import {NotePriority, NotesFilter, NewNote} from "./types";
 
-const valuePriority = {
+const valuePriority: Record<NotePriority, number> = {
   low: 0,
   normal: 1,
   high: 2,
 }
 
-
-
-
 const useNotes = () => {
   const [notes, dispatch] = useReducer(notesReducer, [])
   const [searchQuery, setSearchQuery] = useState('')
-  const [disappearingNoteId, setDisappearingNoteId] = useState(null)
-  const [appearingNoteId, setAppearingNoteId] = useState(null)
-  const [filter, setFilter] = useState('all')
+  const [disappearingNoteId, setDisappearingNoteId] = useState<string | null>(null)
+  const [appearingNoteId, setAppearingNoteId] = useState<string | null>(null)
+  const [filter, setFilter] = useState<NotesFilter>('all')
   const [sortOnPriority, setSortOnPriority] = useState(false)
   const [loadError, setLoadError] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -33,7 +31,7 @@ const useNotes = () => {
     notificationType,
   } = useNotification(4000)
 
-  const loadNotes = useCallback((showLoadScreen) => {
+  const loadNotes = useCallback((showLoadScreen: boolean) => {
     if (showLoadScreen) {
       setIsLoading(true)
     }
@@ -75,7 +73,7 @@ const useNotes = () => {
     }
   }, [showNotification, loadNotes])
 
-  const deleteNote = useCallback((noteId) => {
+  const deleteNote = useCallback((noteId: string) => {
     notesAPI.delete(noteId)
       .then(() => {
         setDisappearingNoteId(noteId)
@@ -89,7 +87,7 @@ const useNotes = () => {
       })
   }, [showNotification])
 
-  const toggleNoteComplete = useCallback((noteId, isDone) => {
+  const toggleNoteComplete = useCallback((noteId: string, isDone: boolean) => {
     notesAPI.toggleComplete(noteId, isDone)
       .then(() => {
         if (filter !== 'all') {
@@ -105,8 +103,8 @@ const useNotes = () => {
       })
   }, [filter, showNotification])
 
-  const addNote = useCallback((title, content, priority, callbackAfterAdding) => {
-    const newNote = {
+  const addNote = useCallback((title: string, content: string, priority: NotePriority, callbackAfterAdding: () => void) => {
+    const newNote: NewNote = {
       title,
       content,
       priority,
