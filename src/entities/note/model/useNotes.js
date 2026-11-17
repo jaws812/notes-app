@@ -4,6 +4,7 @@ import {
   useMemo, useReducer,
   useState,
 } from "react";
+import {notesReducer} from "./notesReducer"
 import notesAPI from "../api/notesAPI";
 import useNotification from "@/shared/utils/useNotification";
 
@@ -13,39 +14,7 @@ const valuePriority = {
   high: 2,
 }
 
-// в state будет храниться наше состояние - массив заметок
-/* в action будет приходить объект у которого гарантированно будет свойство
-type и опционально дополнительные данные*/
-/*
-* в значении свойства type будет строка в скримминг-снейк-кейс нотации, данная
-* строка будет описывать выполняемое действие над данными
-* */
-const notesReducer = (state, action) => {
-  switch (action.type) {
-    case 'SET_ALL': {
-      return Array.isArray(action.notes) ? action.notes : state
-    }
-    case 'ADD': {
-      return [...state, action.note]
-    }
-    case 'TOGGLE_COMPLETE': {
-      const {id, isDone} = action
 
-      return state.map((note) => {
-        return note.id === id ? {...note, isDone} : note
-      })
-    }
-    case 'DELETE': {
-      return state.filter((note) => note.id !== action.id)
-    }
-    case 'DELETE_ALL': {
-      return []
-    }
-    default: {
-      return state
-    }
-  }
-}
 
 
 const useNotes = () => {
