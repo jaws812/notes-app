@@ -1,11 +1,47 @@
-import {createContext, useMemo} from "react"
+import {createContext, useMemo, ReactElement} from "react"
+import type {Dispatch, SetStateAction, RefObject} from "react"
 import useNotes from "./useNotes";
 import useIncompleteNoteScroll from "./useIncompleteNoteScroll";
+import type {Note, NotesFilter, NotePriority} from './types'
+import type {NotificationType} from '@/shared/utils/types'
 
-export const NotesActionsContext = createContext(undefined)
-export const NotesDataContext = createContext(undefined)
+interface NotesContextProps {
+  children: ReactElement;
+}
 
-export const NotesProvider = (props) => {
+interface ActionsType {
+  deleteNote: (noteId: string) => void;
+  deleteAllNotes: () => void;
+  toggleNoteComplete: (noteId: string, isDone: boolean) => void;
+  setSearchQuery: Dispatch<SetStateAction<string>>;
+  addNote: (title: string, content: string, priority: NotePriority, callbackAfterAdding: () => void) => void;
+  setFilter: Dispatch<SetStateAction<NotesFilter>>;
+  hideNotification: () => void;
+  showNotification: (type: NotificationType) => void;
+  setSortOnPriority: Dispatch<SetStateAction<boolean>>;
+  firstIncompleteNoteRef: RefObject<HTMLLIElement | null>;
+  loadNotes: (showLoadScreen: boolean) => void;
+}
+
+interface DataType {
+  notes: Note[];
+  visibleNotes: Note[];
+  notesToRender: Note[];
+  searchQuery: string;
+  disappearingNoteId: string | null;
+  appearingNoteId: string | null;
+  filter: NotesFilter;
+  notificationType: NotificationType;
+  sortOnPriority: boolean;
+  firstIncompleteNoteId: string | undefined;
+  loadError: boolean;
+  isLoading: boolean;
+}
+
+export const NotesActionsContext = createContext<ActionsType | undefined>(undefined)
+export const NotesDataContext = createContext<DataType | undefined>(undefined)
+
+export const NotesProvider = (props: NotesContextProps) => {
   const {
     children,
   } = props
