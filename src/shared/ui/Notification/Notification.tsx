@@ -1,7 +1,14 @@
 import Button from "@/shared/ui/Button";
 import css from './Notification.module.scss'
+import type {MouseEventHandler} from "react";
 
-const Notification = (props) => {
+interface NotificationProps {
+  onClick: MouseEventHandler<HTMLButtonElement>;
+  text: string;
+  isErrorMessage: boolean;
+}
+
+const Notification = (props: NotificationProps) => {
 
   const {
     onClick,
