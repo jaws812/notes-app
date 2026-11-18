@@ -1,16 +1,22 @@
-import {memo, useContext} from 'react'
-import {NotesActionsContext, NotesDataContext} from "@/entities/note";
+import {memo} from 'react'
 import RouterLink from "@/shared/ui/RouterLink";
 import {highlightCaseInsensitive} from "@/shared/utils/highlight";
 import css from './NoteItem.module.scss'
+import type {Note, NotePriority} from '@/entities/note'
+import {
+  useNotesActions,
+  useNotesData
+} from "@/entities/note";
 
-const priorityLabels = {
+type NoteItemProps = Pick<Note, 'id' | 'title' | 'content' | 'isDone' | 'priority'>
+
+const priorityLabels: Record<NotePriority, string> = {
   low: 'Низкий',
   normal: 'Нормальный',
   high: 'Высокий',
 }
 
-const NoteItem = (props) => {
+const NoteItem = (props: NoteItemProps) => {
   const {
     id,
     title,
@@ -23,14 +29,14 @@ const NoteItem = (props) => {
     firstIncompleteNoteRef,
     deleteNote,
     toggleNoteComplete,
-  } = useContext(NotesActionsContext)
+  } = useNotesActions()
 
   const {
     firstIncompleteNoteId,
     disappearingNoteId,
     appearingNoteId,
     searchQuery,
-  } = useContext(NotesDataContext)
+  } = useNotesData()
 
   const highlightedTitle = highlightCaseInsensitive(title, searchQuery)
 

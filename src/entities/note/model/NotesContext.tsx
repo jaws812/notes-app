@@ -1,4 +1,4 @@
-import {createContext, useMemo} from "react"
+import {createContext, useContext, useMemo} from "react"
 import type {ReactElement, Dispatch, SetStateAction, RefObject} from "react"
 import useNotes from "./useNotes";
 import useIncompleteNoteScroll from "./useIncompleteNoteScroll";
@@ -40,6 +40,22 @@ interface DataType {
 
 export const NotesActionsContext = createContext<ActionsType | undefined>(undefined)
 export const NotesDataContext = createContext<DataType | undefined>(undefined)
+
+export const useNotesActions = () => {
+  const context = useContext(NotesActionsContext)
+  if (context === undefined) {
+    throw new Error('useNotesActions должен использоваться в NotesProvider')
+  }
+  return context
+}
+
+export const useNotesData = () => {
+  const context = useContext(NotesDataContext)
+  if (context === undefined) {
+    throw new Error('useNotesData должен использоваться в NotesProvider')
+  }
+  return context
+}
 
 export const NotesProvider = (props: NotesContextProps) => {
   const {

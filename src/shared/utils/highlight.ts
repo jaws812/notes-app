@@ -1,6 +1,6 @@
 // функция будет экранировать потенциально опасные символы, чтобы текст не превращаллся в html
 // в качестве параметра приходит небезопасная строка
-const escapeHTML = (unsafeString) => {
+const escapeHTML = (unsafeString: string) => {
   return unsafeString
     .replaceAll(/&/g, '&amp;')
     .replaceAll(/</g, '&lt;')
@@ -11,11 +11,11 @@ const escapeHTML = (unsafeString) => {
 
 // функция будет экранировать спецсимволы, чтобы при их вводе в поисковую строку
 // функция подсветки не путала символы с паттерном регулярки
-const escapeRegExp = (unsafeString) => {
+const escapeRegExp = (unsafeString: string) => {
   return unsafeString.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 // text - оригинальный текст, query - то, что ввели в строку поиска
-export const highlightCaseInsensitive = (text, query) => {
+export const highlightCaseInsensitive = (text: string, query: string) => {
   const safeText = escapeHTML(text)
   const queryFormatted = query.trim()
 
@@ -26,6 +26,6 @@ export const highlightCaseInsensitive = (text, query) => {
   // поиск вхождений в обоих регистрах
   const pattern = new RegExp(escapeRegExp(queryFormatted), 'ig')
 
-  return safeText.replace(pattern,`<mark>$&</mark>`
+  return safeText.replace(pattern, `<mark>$&</mark>`
   )
 }
