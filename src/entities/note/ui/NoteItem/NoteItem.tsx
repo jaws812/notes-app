@@ -2,11 +2,11 @@ import {memo} from 'react'
 import RouterLink from "@/shared/ui/RouterLink";
 import {highlightCaseInsensitive} from "@/shared/utils/highlight";
 import css from './NoteItem.module.scss'
-import type {Note, NotePriority} from '@/entities/note'
+import type {Note, NotePriority} from '../../model/types'
 import {
   useNotesActions,
   useNotesData
-} from "@/entities/note";
+} from "../../model/NotesContext"
 
 type NoteItemProps = Pick<Note, 'id' | 'title' | 'content' | 'isDone' | 'priority'>
 

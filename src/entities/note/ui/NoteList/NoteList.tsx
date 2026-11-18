@@ -1,6 +1,7 @@
 import {memo} from 'react'
-import {NoteItem, useNotesData} from "@/entities/note"
-import type {NotesFilter} from "@/entities/note"
+import NoteItem from "../NoteItem"
+import {useNotesData} from "../../model/NotesContext"
+import type {NotesFilter} from '../../model/types'
 
 interface NoteListProps {
   css: Record<string, string>

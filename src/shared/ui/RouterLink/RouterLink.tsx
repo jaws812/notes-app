@@ -1,4 +1,4 @@
-import {ComponentPropsWithoutRef, ReactNode, MouseEvent} from "react";
+import type {ComponentPropsWithoutRef, ReactNode, MouseEvent} from "react";
 
 interface RouterLinkProps extends Omit<ComponentPropsWithoutRef<'a'>, 'href' | 'onClick'>{
   className?: string;
