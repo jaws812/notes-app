@@ -1,19 +1,23 @@
-import {memo, useContext, useMemo} from 'react'
-import {NotesActionsContext, NotesDataContext} from "@/entities/note";
+import {memo, useMemo} from 'react'
+import {useNotesActions, useNotesData} from "@/entities/note";
 import Button from "@/shared/ui/Button";
 
-const NoteInfo = (props) => {
+interface NoteInfoProps {
+  css: Record<string, string>;
+}
+
+const NoteInfo = (props: NoteInfoProps) => {
   const {
     css,
   } = props
 
   const {
     deleteAllNotes,
-  } = useContext(NotesActionsContext)
+  } = useNotesActions()
 
   const {
     notes,
-  } = useContext(NotesDataContext)
+  } = useNotesData()
 
   const total = notes.length
   const hasNotes = total > 0
