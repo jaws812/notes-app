@@ -1,19 +1,22 @@
-import {useContext} from "react";
-import {NotesActionsContext, NotesDataContext} from "@/entities/note";
+import {useNotesActions, useNotesData} from "@/entities/note";
 import Button from "@/shared/ui/Button";
 
-const FilterNotes = (props) => {
+interface FilterNotesProps {
+  css: Record<string, string>;
+}
+
+const FilterNotes = (props: FilterNotesProps) => {
   const {
     css,
   } = props
 
   const {
     setFilter,
-  } = useContext(NotesActionsContext)
+  } = useNotesActions()
 
   const {
     filter,
-  } = useContext(NotesDataContext)
+  } = useNotesData()
 
   return (
     <div className={css.filter}>
