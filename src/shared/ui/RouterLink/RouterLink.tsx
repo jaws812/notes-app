@@ -1,4 +1,12 @@
-const RouterLink = (props) => {
+import {ComponentPropsWithoutRef, ReactNode, MouseEvent} from "react";
+
+interface RouterLinkProps extends Omit<ComponentPropsWithoutRef<'a'>, 'href' | 'onClick'>{
+  className?: string;
+  to: string;
+  children: ReactNode;
+}
+
+const RouterLink = (props: RouterLinkProps) => {
   const {
     className = '',
     to,
@@ -6,7 +14,7 @@ const RouterLink = (props) => {
     ...rest
   } = props
 
-  const handleClick = (event) => {
+  const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault()
     window.history.pushState({}, '', to)
     window.dispatchEvent(new PopStateEvent('popstate'))
