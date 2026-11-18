@@ -1,13 +1,18 @@
-import {memo, useContext} from 'react'
-import {NoteItem, NotesDataContext} from "@/entities/note";
+import {memo} from 'react'
+import {NoteItem, useNotesData} from "@/entities/note"
+import type {NotesFilter} from "@/entities/note"
 
-const filterLabels = {
+interface NoteListProps {
+  css: Record<string, string>
+}
+
+const filterLabels: Record<NotesFilter, string> = {
   all: 'Заметок',
   active: 'Активных заметок',
   completed: 'Выполненных заметок',
 }
 
-const NoteList = (props) => {
+const NoteList = (props: NoteListProps) => {
   const {
     css,
   } = props
@@ -17,7 +22,7 @@ const NoteList = (props) => {
     visibleNotes,
     notesToRender,
     filter,
-  } = useContext(NotesDataContext)
+  } = useNotesData()
 
   const hasNotes = notes.length > 0
 

@@ -1,5 +1,3 @@
-export type NotePriority = 'low' | 'normal' | 'high'
-
 export interface Note {
   id: string;
   title: string;
@@ -8,6 +6,6 @@ export interface Note {
   isDone: boolean;
 }
 
+export type NotePriority = 'low' | 'normal' | 'high'
+export type NotesFilter = 'all' | 'active' | 'completed'
 export type NewNote = Omit<Note, 'id'>
-
-export type NotesFilter = 'all' | 'completed' | 'active'
