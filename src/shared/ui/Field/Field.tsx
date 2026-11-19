@@ -1,6 +1,21 @@
 import css from './Field.module.scss'
+import type {InputEventHandler, Ref} from "react";
 
-const Field = (props) => {
+interface FieldProps {
+  className: string;
+  id: string;
+  type: string;
+  label: string;
+  rows?: number;
+  cols?: number;
+  maxLength?: number;
+  value: string;
+  error: string;
+  onInput: InputEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  ref?: Ref<HTMLInputElement | HTMLTextAreaElement>;
+}
+
+const Field = (props: FieldProps) => {
   const {
     className,
     id,
@@ -38,7 +53,15 @@ const Field = (props) => {
         maxLength={maxLength}
         value={value}
         onInput={onInput}
-        ref={ref}
+        ref={(element: HTMLInputElement | HTMLTextAreaElement | null) => {
+          if (typeof ref === 'function') {
+            return ref(element)
+          }
+
+          if (ref) {
+            ref.current = element
+          }
+        }}
       />
       {error && (
         <span
@@ -51,4 +74,3 @@ const Field = (props) => {
 }
 
 export default Field
-
