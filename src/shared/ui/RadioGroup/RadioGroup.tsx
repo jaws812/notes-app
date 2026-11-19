@@ -1,6 +1,16 @@
 import css from './RadioGroup.module.scss'
+import type {ChangeEventHandler} from "react";
+import type {RadioOption} from "@/shared/utils/types";
 
-const RadioGroup = (props) => {
+interface RadioGroupProps {
+  name: string;
+  legend: string;
+  options: RadioOption[];
+  valueActive: string;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+}
+
+const RadioGroup = (props: RadioGroupProps) => {
 
   const {
     name,

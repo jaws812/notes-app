@@ -6,3 +6,8 @@ export type NotificationType =
   | 'toggle-error'
   | 'delete-all-error'
   | 'edit-error'
+
+export interface RadioOption {
+  value: string;
+  text: string;
+}
