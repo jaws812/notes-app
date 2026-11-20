@@ -1,15 +1,28 @@
 import Field from "@/shared/ui/Field";
 import RadioGroup from "@/shared/ui/RadioGroup";
 import Button from "@/shared/ui/Button";
-import {useState} from "react";
+import {
+  Dispatch, SetStateAction, useState, type MouseEventHandler, type SubmitEvent,
+  type InputEvent, type ChangeEvent
+} from "react";
+import type {RadioOption} from "@/shared/utils/types";
+import type {NewNote, NotePriority} from "@/entities/note";
 
-const priorityVariables = [
+const priorityVariables: RadioOption[] = [
   {value: 'low', text: 'Низкий'},
   {value: 'normal', text: 'Нормальный'},
   {value: 'high', text: 'Высокий'},
 ]
 
-const EditNoteForm = (props) => {
+interface EditNoteFormProps {
+  draft: NewNote;
+  setDraft: Dispatch<SetStateAction<NewNote>>;
+  onClick: MouseEventHandler<HTMLButtonElement>;
+  onSave: MouseEventHandler<HTMLButtonElement>;
+  css: Record<string, string>;
+}
+
+const EditNoteForm = (props: EditNoteFormProps) => {
   const {
     draft,
     setDraft,
@@ -21,12 +34,16 @@ const EditNoteForm = (props) => {
   const [errorTitle, setErrorTitle] = useState('')
   const [errorContent, setErrorContent] = useState('')
 
-  const onSubmit = (event) => {
+  const isNotePriority = (value: string): value is NotePriority => {
+    return value === 'low' || value === 'normal' || value === 'high'
+  }
+
+  const onSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault()
   }
 
-  const onInput = (event) => {
-    const {value, id} = event.target
+  const onInput = (event: InputEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const {value, id} = event.currentTarget
     const clearValue = value.trim()
     const hasOnlySpaces = value.length > 0 && clearValue.length === 0
 
@@ -39,11 +56,15 @@ const EditNoteForm = (props) => {
     }
   }
 
-  const onChange = (event) => {
-    setDraft({...draft, priority: event.target.value})
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (isNotePriority(event.target.value)) {
+      setDraft({
+        ...draft, priority: event.target.value
+      })
+    }
   }
 
-  const onChangeCheckbox = (event) => {
+  const onChangeCheckbox = (event: ChangeEvent<HTMLInputElement>) => {
     setDraft({...draft, isDone: event.target.checked})
   }
 
